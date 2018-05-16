@@ -1,5 +1,11 @@
 # WorldSimulator
 
+## Technology
+
+- Intellij IDEA ou Eclipse si vous n'avez pas d'âme
+- MASON
+- JavaFX / FXML (mais on y touchera pas/peu normalement)
+
 ## TODO list
 
 - 3 Gestion de l'accroissement
