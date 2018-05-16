@@ -2,8 +2,8 @@
 
 ## TODO list
 
-- 2 Gestion de l'accroissement
-- 2 Gestion des combats
+- 3 Gestion de l'accroissement
+- 3 Gestion des combats
 
 ## Partage de travail avant le 30.05.18
 
@@ -20,4 +20,4 @@
 
 ### Felipe
 - X Hex Grid => Comment ?
-- 1 Génération d'agents depuis la fenêtre de configuration
+- 2 Génération d'agents depuis la fenêtre de configuration
