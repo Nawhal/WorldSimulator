@@ -15,7 +15,7 @@
 
 ### Nawhal
 - 0 Refactor le metier (enlever logique hexagone)
-- 0 Supprimer la vue inutile ainsi que la logique des hexagones
+- ~~0 Supprimer la vue inutile ainsi que la logique des hexagones~~
 
 ### Cédric
 - X Hex Grid => Comment ?
