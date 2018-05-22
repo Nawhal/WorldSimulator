@@ -18,8 +18,8 @@ public class Case {
         public Population getPopulation(){return population;}
         public void setPopulation(Population value)
         {
-            if(value!=null) value.setCasePop(this);//la case s'inscrit dans la nouvelle population
-            if(population!=null) population.setCasePop(null);//on supprime la case des attribut de l'ancienne poulation
+            if(value!=null) value.setCasePop(this); // la case s'inscrit dans la nouvelle population
+            if(population!=null) population.setCasePop(null); // on supprime la case des attributs de l'ancienne population
             population = value;
         }
         

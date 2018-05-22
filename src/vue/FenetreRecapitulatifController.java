@@ -2,9 +2,8 @@ package vue;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,10 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import metier.Dieu;
 import metier.FabriqueTerrain;
-import metier.GestionnaireDeMondeCaseParCase;
 import metier.Monde;
 import metier.MondeInfos;
 import metier.ValeursParDefaut;
@@ -133,29 +130,7 @@ public class FenetreRecapitulatifController implements Initializable {
         
         
         Monde m = new Monde(infosMonde);
-        GestionnaireDeMondeCaseParCase g = new GestionnaireDeMondeCaseParCase(m, 100);
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        FenetreJeuController controller = new FenetreJeuController(g, infosMonde.getDieux());
-        fxmlLoader.setController(controller);
-        fxmlLoader.setLocation(getClass().getResource("FenetreJeu.fxml"));
-        Parent root = fxmlLoader.load();
-        root.setStyle("-fx-background-image: url('/design/GameBackground.jpg');"
-                + "-fx-background-size: 100% 100%;"
-                + "-fx-background-repeat : no-repeat;");
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-           
-            @Override
-            public void handle(WindowEvent we) {
-                Platform.exit();
-                System.exit(0);
-            }
-        }); 
-        stage.show();
-        
-        g.lancerPartie();
+        // TODO Ouvrir MASON et lancer agents
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
