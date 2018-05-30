@@ -6,24 +6,21 @@
 - MASON
 - JavaFX / FXML (mais on y touchera pas/peu normalement)
 
-## TODO list
-
-- 3 Gestion de l'accroissement
-- 3 Gestion des combats
-
-## Partage de travail avant le 30.05.18
+## Partage de travail avant le soon
 
 ### Nawhal
-- 0 Refactor le metier (enlever logique hexagone)
-- ~~0 Supprimer la vue inutile ainsi que la logique des hexagones~~
+- ~~Refactor le metier (enlever logique hexagone)~~
+- ~~Supprimer la vue inutile ainsi que la logique des hexagones~~
+- Refactor du futur (faire ce qui manque et mettre du ciment de partout)
 
 ### Cédric
-- X Hex Grid => Comment ?
-- X Case avec terrain spécifique => Objet Terrain sur chaque case
+- ~~Case avec terrain spécifique => Objet Terrain sur chaque case~~
+- Gestion des combats
 
 ### Luca
-- 1 Création des agents qui utilisent le métier
+- Création de l'agent Population qui utilisent le métier avec accroissement
 
 ### Felipe
-- X Hex Grid => Comment ?
-- 2 Génération d'agents depuis la fenêtre de configuration
+- ~~Hex Grid => Comment ?~~
+- Génération d'agents depuis la fenêtre de configuration
+- Portrayal pour les Populations
