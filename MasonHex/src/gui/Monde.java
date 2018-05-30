@@ -5,7 +5,7 @@ package gui;
 
 import model.AgentPopulation;
 import model.Terrain;
-import model.student;
+
 import sim.app.wcss.tutorial02.Student;
 import sim.engine.*;
 import sim.field.continuous.Continuous2D;

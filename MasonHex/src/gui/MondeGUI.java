@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import model.AgentPopulation;
 import model.Terrain;
-import model.student;
+
 import sim.display.Console;
 import sim.display.Controller;
 import sim.display.Display2D;
