@@ -79,5 +79,30 @@ public class Map extends SimState {
 	  return location;
   }
 
+	public Population getAdversaryLocation(int x, int y, Population p){
+		boolean t = false;
+		Population adversary = null;
+		if(inGrid(x - 1,y) && yard.get(x - 1,y) != null && !p.equals(yard.get(x - 1,y)) && t == false){
+			adversary = yard.get(x - 1,y);
+			t = true;
+		}
+
+		if(inGrid(x + 1,y) && yard.get(x + 1,y) != null && !p.equals(yard.get(x + 1,y)) && t == false){
+			adversary = yard.get(x + 1,y);
+			t = true;
+		}
+
+		if(inGrid(x,y - 1) && yard.get(x,y - 1) != null && !p.equals(yard.get(x,y - 1)) && t == false){
+			adversary = yard.get(x,y - 1);
+			t = true;
+		}
+
+		if(inGrid(x,y + 1) && yard.get(x,y + 1) != null && !p.equals(yard.get(x,y + 1)) && t == false){
+			adversary = yard.get(x,y + 1);
+		}
+
+		return adversary;
+	}
+
   public  int  getNumStudents()  {  return  NUM_A;  }
 }
