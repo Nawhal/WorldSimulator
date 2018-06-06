@@ -1,10 +1,12 @@
 package agents.model;
 
+import sim.engine.Schedule;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import metier.Dieu;
 import metier.Race;
 import metier.StrategieDeJeu;
+import sim.engine.Stoppable;
 import sim.util.Int2D;
 
 public class Population implements Steppable {
@@ -12,8 +14,8 @@ public class Population implements Steppable {
 	private String name;
 	private StrategieDeJeu strat;
 	private Race race;
-	private int numberInhabitants = 0;
-	public static int MAX_POPULATION = 1000;
+	private int numberInhabitants = 1;
+	public static int MAX_POPULATION = 100;
     public int x, y;
 
     private void grow () {
@@ -34,12 +36,16 @@ public class Population implements Steppable {
 
 	@Override
 	public void step (SimState state) {
+        if(this.numberInhabitants == 0) {
+            state.schedule.scheduleRepeating(this).stop();
+            return;
+        }
 		Map map = (Map) state;
 		boolean fight = false;
 
 		Population adv = map.getAdversaryLocation(this.x, this.y, this);
 		if(adv != null) {
-
+            attaquer(adv, map);
         }
 
 		if(!fight) { // On imagine que si un Dieu a combattu, il ne peux pas grossir le même tour
@@ -58,16 +64,19 @@ public class Population implements Steppable {
         return new Int2D(this.x, this.y);
     }
 
-    public void tuer () {
+    public void tuer (Map map) {
         this.numberInhabitants = 0;
+        map.yard.set(this.x, this.y, null);
     }
 
-    public boolean attaquer (Population ennemi)
+    public boolean attaquer (Population ennemi, Map map)
     {
-        if (ennemi.defendre(this))
+
+        //System.out.println("test2");
+        if (ennemi.defendre(this, map))
             return true;
 
-        tuer(); // On a perdu ou égalité donc notre population meurt
+        //tuer(map); // On a perdu ou égalité donc notre population meurt
         return false;
     }
 
@@ -79,7 +88,8 @@ public class Population implements Steppable {
         return this.numberInhabitants;
     }
 
-    private boolean defendre (Population attaquant) {
+    private boolean defendre (Population attaquant, Map map) {
+        //System.out.println("test");
         checkTerrain(); // Il faudra checker si le terrain nous donne un aventage
         //float ratioDefenseur = getRatioPuissanceAttaque(getCasePop().getTerrain());//le terrain de l'attaque est le terrain du defenseur
         //ratioDefenseur += getCasePop().getTerrain().getBonusPuissance();//le defenseur a droit a un bonus de defence car il connait le terrain ou il se trouve
@@ -90,9 +100,13 @@ public class Population implements Steppable {
             //setNombreHabitants(getNombreHabitants() - calculNbMortPourLeGagnant(this, ratioDefenseur, attaquant, ratioEnnemi));//Calcul des "morts"
             return false;
         }*/
-        tuer();
+        tuer(map);
         //attaquant.setNombreHabitants(attaquant.getNombreHabitants() - calculNbMortPourLeGagnant(ennemi, ratioEnnemi, this, ratioDefenseur));//Calcul des "morts"
-        attaquant.setNombreHabitants(attaquant.getNombreHabitants() - (101 % attaquant.getNombreHabitants()) + 1);
+        //attaquant.setNombreHabitants(attaquant.getNombreHabitants() - (101 % attaquant.getNombreHabitants()) + 1);
         return true;
+    }
+
+    public int getIdDieu() {
+        return 0;
     }
 }

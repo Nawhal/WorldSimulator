@@ -19,4 +19,9 @@ public class Dieu2 extends Population {
     public void step (SimState state) {
         super.step(state);
     }
+
+    @Override
+    public int getIdDieu() {
+        return 2;
+    }
 }

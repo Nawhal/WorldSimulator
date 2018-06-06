@@ -1,6 +1,7 @@
 package agents.model;
 
 import sim.engine.SimState;
+import sim.engine.Stoppable;
 import sim.field.grid.ObjectGrid2D;
 import sim.util.Int2D;
 
@@ -37,10 +38,9 @@ public class Map extends SimState {
 
   private void initPopulation () {
 		Population p = new Population();
-          yard.set(5,5, p);
-          p.x = 5;
-          p.y = 5;
-          schedule.scheduleRepeating(p);
+        yard.set(5,5, p);
+        p.x = 5;
+        p.y = 5;
   }
 
   public boolean free (int x,int y) {
@@ -82,22 +82,22 @@ public class Map extends SimState {
 	public Population getAdversaryLocation (int x, int y, Population p) {
 		boolean t = false;
 		Population adversary = null;
-		if(inGrid(x - 1,y) && yard.get(x - 1,y) != null && !p.equals(yard.get(x - 1,y)) && t == false) {
+		if(inGrid(x - 1,y) && yard.get(x - 1,y) != null && (p.getIdDieu() != ((Population) yard.get(x - 1,y)).getIdDieu()) && t == false) {
 			adversary = (Population) yard.get(x - 1,y);
 			t = true;
 		}
 
-		if(inGrid(x + 1,y) && yard.get(x + 1,y) != null && !p.equals(yard.get(x + 1,y)) && t == false) {
+		if(inGrid(x + 1,y) && yard.get(x + 1,y) != null && (p.getIdDieu() != ((Population) yard.get(x + 1,y)).getIdDieu()) && t == false) {
 			adversary = (Population) yard.get(x + 1,y);
 			t = true;
 		}
 
-		if(inGrid(x,y - 1) && yard.get(x,y - 1) != null && !p.equals(yard.get(x,y - 1)) && t == false) {
+		if(inGrid(x,y - 1) && yard.get(x,y - 1) != null && (p.getIdDieu() != ((Population) yard.get(x,y - 1)).getIdDieu()) && t == false) {
 			adversary = (Population) yard.get(x,y - 1);
 			t = true;
 		}
 
-		if(inGrid(x,y + 1) && yard.get(x,y + 1) != null && !p.equals(yard.get(x,y + 1)) && t == false) {
+		if(inGrid(x,y + 1) && yard.get(x,y + 1) != null && (p.getIdDieu() != ((Population) yard.get(x,y + 1)).getIdDieu()) && t == false) {
 			adversary = (Population) yard.get(x,y + 1);
 		}
 
