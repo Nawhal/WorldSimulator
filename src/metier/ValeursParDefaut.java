@@ -16,8 +16,7 @@ public class ValeursParDefaut {
     /**
      * @return la liste des dieux par défaut
      */
-    public static List<Dieu> listeDieux()
-    {
+    public static List<Dieu> listeDieux () {
         List<Dieu> dieux = new ArrayList<>();
         dieux.add(new Dieu("Chauntéa, Déesse des Plaines", "Plaine", 0.9f, 1.5f, 0.9f, 1.5f, Color.ORANGE, "design/Chauntea.jpg"));
         dieux.add(new Dieu("Lissala, Mère Nourricière", "Plaine", 1.2f, 1.2f, 0.8f, 1.2f, Color.WHEAT, "design/Lissala.jpg"));
@@ -43,8 +42,7 @@ public class ValeursParDefaut {
     /**
      * @return une HashMap liant nom de dieu et population correspondante
      */
-    public static HashMap<String, Population> populationParDieu()
-    {
+    public static HashMap<String, Population> populationParDieu () {
         HashMap<String, Population> populationParDieu = new HashMap<>();
         List<Dieu> dieux = listeDieux();
         
@@ -80,8 +78,7 @@ public class ValeursParDefaut {
     /**
      * Initialise les Terrains par defaut dans FabriqueTerrain.
      */
-    public static void initialiserTerrains()
-    {
+    public static void initialiserTerrains () {
         FabriqueTerrain.ajouterTerrain("Plaine", 1.2f, 1f);
         FabriqueTerrain.ajouterTerrain("Montagne", 0.9f, 1.3f);
         FabriqueTerrain.ajouterTerrain("Désert", 0.9f, 0.9f);
@@ -93,8 +90,7 @@ public class ValeursParDefaut {
     /**
      * @return une HashMap liant Terrain et Couleur, afin de pouvoir différencier les différents Terrains dans le jeu.
      */
-    public static HashMap<Terrain, Color> couleurParTerrain()
-    {
+    public static HashMap<Terrain, Color> couleurParTerrain () {
         HashMap<Terrain, Color> couleurParTerrain = new HashMap<>();
         couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Plaine"), Color.rgb(178, 255, 102, 0.3));
         couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Montagne"), Color.rgb(193, 127, 83, 0.3));

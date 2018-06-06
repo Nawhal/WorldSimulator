@@ -5,7 +5,7 @@ import sim.util.Int2D;
 
 public class Dieu1 extends Population{
 
-    public void expend(SimState state) {
+    public void expend (SimState state) {
         Map map = (Map) state;
         Dieu1 p = new Dieu1();
         Int2D location = map.getFreeLocation(this.x, this.y);
@@ -17,7 +17,7 @@ public class Dieu1 extends Population{
         }
     }
 
-    public void step(SimState state) {
+    public void step (SimState state) {
         super.step(state);
     }
 }

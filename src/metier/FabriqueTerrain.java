@@ -17,8 +17,7 @@ public abstract class FabriqueTerrain {
      * @param nom Nom du Terrain
      * @return Terrain associé au nom passé en argument
      */
-    public static Terrain fabriquerTerrain(String nom)
-    {
+    public static Terrain fabriquerTerrain (String nom) {
         return terrains.get(nom);
     }
     
@@ -28,8 +27,7 @@ public abstract class FabriqueTerrain {
      * @param bonusAccroissment Bonus d'accroissement octroyé par le terrain
      * @param bonusPuissance Bonus de puissance octroyé par le terrain
      */
-    public static void ajouterTerrain(String nom, float bonusAccroissment, float bonusPuissance)
-    {
+    public static void ajouterTerrain (String nom, float bonusAccroissment, float bonusPuissance) {
         if (!terrains.containsKey(nom))
             terrains.put(nom, new Terrain(nom, bonusAccroissment, bonusPuissance));
     }

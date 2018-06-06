@@ -11,16 +11,15 @@ import java.util.List;
  */
 public class MondeInfos {
     private HashMap<Terrain, Integer> terrains;
-        public HashMap<Terrain, Integer> getTerrains() { return terrains; }
+        public HashMap<Terrain, Integer> getTerrains () { return terrains; }
     
     private HashMap<Dieu, Population> populations;
-        public HashMap<Dieu, Population> getPopulations() { return populations; }
+        public HashMap<Dieu, Population> getPopulations () { return populations; }
     
     private List<Dieu> dieux;
-        public List<Dieu> getDieux() { return dieux; }
+        public List<Dieu> getDieux () { return dieux; }
     
-    public MondeInfos()
-    {
+    public MondeInfos () {
         dieux = new ArrayList<>();
         terrains = new HashMap<>();
         populations = new HashMap<>();

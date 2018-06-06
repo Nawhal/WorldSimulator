@@ -16,26 +16,24 @@ public class Population implements Steppable {
 	public static int MAX_POPULATION = 1000;
     public int x, y;
 
-    private void grow(){
+    private void grow () {
     	this.numberInhabitants += 1;
 	}
 
-	 protected void expend(SimState state) {
+	protected void expend (SimState state) {
 		Map map = (Map) state;
 		Population p = new Population();
 		Int2D location = map.getFreeLocation(this.x, this.y);
 		if (location != null) {
-			map.yard.set(location.x, location.y, p);
-			p.x = location.x;
-			p.y = location.y;
-			map.schedule.scheduleRepeating(p);
-		}
-
-
+            map.yard.set(location.x, location.y, p);
+            p.x = location.x;
+            p.y = location.y;
+            map.schedule.scheduleRepeating(p);
+        }
 	}
 
 	@Override
-	public void step(SimState state) {
+	public void step (SimState state) {
 		Map map = (Map) state;
 		boolean fight = false;
 
@@ -49,25 +47,22 @@ public class Population implements Steppable {
             else this.expend(state);
         }
 		//System.out.println(this.numberInhabitants);
-		}
+    }
 
-
-    public void checkTerrain() {
+    public void checkTerrain () {
         // Le plus simple serait de faire une grille contenant les types de terrains qui serait généré au début et stocker dans la map.
         // Sinon il faut refaire la plupart des fonctions de récupération d'objet
     }
 
-    public Int2D getPosition() {
+    public Int2D getPosition () {
         return new Int2D(this.x, this.y);
     }
 
-    public void tuer()
-    {
+    public void tuer () {
         this.numberInhabitants = 0;
     }
 
-
-    public boolean attaquer(Population ennemi)
+    public boolean attaquer (Population ennemi)
     {
         if (ennemi.defendre(this))
             return true;
@@ -76,16 +71,15 @@ public class Population implements Steppable {
         return false;
     }
 
-    public void setNombreHabitants(int nbrH) {
+    public void setNombreHabitants (int nbrH) {
         this.numberInhabitants = nbrH;
     }
-    public int getNombreHabitants() {
+
+    public int getNombreHabitants () {
         return this.numberInhabitants;
     }
 
-    private boolean defendre(Population attaquant)
-    {
-
+    private boolean defendre (Population attaquant) {
         checkTerrain(); // Il faudra checker si le terrain nous donne un aventage
         //float ratioDefenseur = getRatioPuissanceAttaque(getCasePop().getTerrain());//le terrain de l'attaque est le terrain du defenseur
         //ratioDefenseur += getCasePop().getTerrain().getBonusPuissance();//le defenseur a droit a un bonus de defence car il connait le terrain ou il se trouve
@@ -101,7 +95,4 @@ public class Population implements Steppable {
         attaquant.setNombreHabitants(attaquant.getNombreHabitants() - (101 % attaquant.getNombreHabitants()) + 1);
         return true;
     }
-
-
-
 }

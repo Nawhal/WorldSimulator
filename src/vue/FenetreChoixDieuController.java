@@ -252,12 +252,12 @@ public class FenetreChoixDieuController implements Initializable {
                         {                                                  // Il le sera à présent !
                             Platform.runLater(() -> {   // Besoin d'un runLater car sinon la liste de la ComboBox est inaccessible alors qu'on change d'index sélectionné.
                                 int indexOfOldValue = valeursOriginelles.indexOf(oldValue);   // Récupère l'index originel de l'ancien dieu afin de toujours garder le même ordre
-                                if (indexOfOldValue < dieuxObservables.size())               //  dans la Liste de dieux sélectionnables
+                                if (indexOfOldValue < dieuxObservables.size())               // dans la Liste de dieux sélectionnables
                                     dieuxObservables.add(indexOfOldValue, (String) oldValue);      // Rajoute le dieu à la liste vuq u'il est à présent sélectionnable à nouveau
                                 else
                                     dieuxObservables.add(dieuxObservables.size(), (String) oldValue); // Si l'index est supérieur à la taille de la liste, on ajoute le dieu à la fin de celle-ci
                                 setDieuxToComboBox();                     // Réinitialise toutes les ComboBoxs pour qu'elles aient la bonne liste de dieux sélectionnables après changements
-                            }) ;
+                            });
                         }
                     }
 
@@ -270,7 +270,7 @@ public class FenetreChoixDieuController implements Initializable {
                             Platform.runLater(() -> {   // Besoin d'un runLater car sinon la liste de la ComboBox est inaccessible alors qu'on change d'index sélectionné.
                                 dieuxObservables.remove((String) newValue);   // Enlève le dieu sélectionné des dieux sélectionnables
                                 setDieuxToComboBox();                     // Réinitialise toutes les ComboBoxs pour qu'elles aient la bonne liste de dieux sélectionnables après changements
-                            }) ;
+                            });
                         }
                     }
                 }

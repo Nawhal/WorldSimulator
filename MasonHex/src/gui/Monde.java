@@ -18,7 +18,7 @@ import sim.util.Double2D;
 import sim.util.Int2D;
 public class Monde extends SimState
 {
-	public  SparseGrid2D yard = new SparseGrid2D(80,80);
+	public SparseGrid2D yard = new SparseGrid2D(80,80);
 	public int numTerrains = 5;
 	public Monde(long seed)
 {

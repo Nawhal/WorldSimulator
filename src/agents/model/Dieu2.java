@@ -5,7 +5,7 @@ import sim.util.Int2D;
 
 public class Dieu2 extends Population {
 
-    public void expend(SimState state) {
+    public void expend (SimState state) {
         Map map = (Map) state;
         Dieu2 p = new Dieu2();
         Int2D location = map.getFreeLocation(this.x, this.y);
@@ -16,7 +16,7 @@ public class Dieu2 extends Population {
             map.schedule.scheduleRepeating(p);
         }
     }
-    public void step(SimState state) {
+    public void step (SimState state) {
         super.step(state);
     }
 }

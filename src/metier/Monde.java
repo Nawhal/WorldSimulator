@@ -10,21 +10,17 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Monde {
 
-    private final Case damier[][];//////[y][x]----------> Construit en [hauteur][largeur] au lieu de [x][y]
+    private final Case damier[][]; //[y][x]----------> Construit en [hauteur][largeur] au lieu de [x][y]
         /** @return Damier représentant le monde */
-        public Case[][] getDamier(){return damier;}
-        
-        
+        public Case[][] getDamier () {return damier;}
+
     private final int longueurMax;    
     private int hauteurLogique;
     private int largeurLogique;
-    
 
-
-    public Monde(MondeInfos mondeInfos)
-    {
+    public Monde (MondeInfos mondeInfos) {
         int nbCase = calculerNbCase(mondeInfos);
-        this.longueurMax=(int)Math.sqrt(nbCase)+1;
+        this.longueurMax = (int)Math.sqrt(nbCase)+1;
         damier = new Case[longueurMax][longueurMax];
         
         genererDamierCaseVide(nbCase);
@@ -37,11 +33,9 @@ public class Monde {
      * @param mondeInfos Information sur le monde à générer
      * @return Nombre de case necessaire pour créer le monde
      */
-    private int calculerNbCase(MondeInfos mondeInfos)
-    {
+    private int calculerNbCase (MondeInfos mondeInfos) {
         int nbCase = 0;
-        for(Terrain t : mondeInfos.getTerrains().keySet())
-        {
+        for(Terrain t : mondeInfos.getTerrains().keySet()) {
             nbCase += mondeInfos.getTerrains().get(t);
         }
         return nbCase;
@@ -51,15 +45,12 @@ public class Monde {
      * Place des Cases vide (Sans populations dans le damier)
      * @param nbCase Nombre de case a créer 
      */
-    private void genererDamierCaseVide(int nbCase)
-    {
+    private void genererDamierCaseVide (int nbCase) {
         int incMonde=0;
         int idCase=1;
         
-        for(int i=0;i<nbCase;i+=longueurMax)
-        {
-            for(int j=0;j<longueurMax;j++)
-            {
+        for(int i=0;i<nbCase;i+=longueurMax) {
+            for(int j=0;j<longueurMax;j++) {
                 damier[incMonde][j]=new Case(this,idCase);
                 if(idCase==nbCase)
                     break;
@@ -75,13 +66,10 @@ public class Monde {
      * Obtient la liste des cases du damier
      * @return Liste des Cases du damier
      */
-    private ArrayList<Case> getListeCase()
-    {
+    private ArrayList<Case> getListeCase () {
         ArrayList<Case> listeCases = new ArrayList<>();
-        for(Case tabC[]: damier)
-        {
-            for(Case c: tabC)
-            {
+        for(Case tabC[]: damier) {
+            for(Case c: tabC) {
                 if(c!=null)
                     listeCases.add(c);
             }
@@ -94,15 +82,12 @@ public class Monde {
      * @param mondeInfos Information sur le monde à créer
      * @param nbCase Nombre de case dans le damier
      */
-    private void genererTerrainCase(MondeInfos mondeInfos, int nbCase)
-    {
+    private void genererTerrainCase (MondeInfos mondeInfos, int nbCase) {
         int index;
         ArrayList<Case> listeCases = getListeCase();
 
-        for(Terrain t : mondeInfos.getTerrains().keySet())
-        {
-            for(int i=0; i<mondeInfos.getTerrains().get(t); i++)
-            {
+        for(Terrain t : mondeInfos.getTerrains().keySet()) {
+            for(int i=0; i<mondeInfos.getTerrains().get(t); i++) {
                 index = ThreadLocalRandom.current().nextInt(0, listeCases.size());
                 listeCases.get(index).setTerrain(t);
                 listeCases.remove(index);
@@ -114,13 +99,11 @@ public class Monde {
      * @param mondeInfos Infos sur le monde pour contenant les populations a ajouter
      * @param nbCase Nombre de cases dans le monde
      */
-    private void mettrePopulationsDansCases(MondeInfos mondeInfos, int nbCase)
-    {
+    private void mettrePopulationsDansCases (MondeInfos mondeInfos, int nbCase) {
         int index;
         ArrayList<Case> listeCases = getListeCase();
         
-        for(Population p : mondeInfos.getPopulations().values())
-        {
+        for(Population p : mondeInfos.getPopulations().values()) {
             index = ThreadLocalRandom.current().nextInt(0, listeCases.size());
             listeCases.get(index).setPopulation(p);
             listeCases.remove(index);
@@ -132,15 +115,11 @@ public class Monde {
      * @param idCase
      * @return Liste des voisins
      */
-    public ArrayList<Case> findVoisinAtLoc(int idCase)
-    {
+    public ArrayList<Case> findVoisinAtLoc(int idCase) {
         ArrayList<Case> voisins = new ArrayList<>();
-        for(int i=0; i<hauteurLogique; i++)
-        {
-            for(int j=0; j<largeurLogique; j++)
-            {
-                if (damier[i][j]!=null && damier[i][j].getId()==idCase)
-                {
+        for(int i=0; i<hauteurLogique; i++) {
+            for(int j=0; j<largeurLogique; j++) {
+                if (damier[i][j]!=null && damier[i][j].getId()==idCase) {
                     ajouterVoisins(voisins, i, j);
                     return voisins;
                 }
@@ -155,8 +134,7 @@ public class Monde {
      * @param posx Position en x du voisin a vérifier
      * @param posy Position en y du voisin a vérifier
      */
-    private void ajoutVoisinSiExist(ArrayList<Case> voisins, int posx, int posy)
-    {
+    private void ajoutVoisinSiExist(ArrayList<Case> voisins, int posx, int posy) {
         if(posy >= hauteurLogique || posx >= largeurLogique || posx < 0 || posy < 0)
             return;
         if (damier[posy][posx]!=null)
@@ -169,29 +147,26 @@ public class Monde {
      * @param i Position en y de la case
      * @param j Position en x de la case
      */
-    private void ajouterVoisins(ArrayList<Case> voisins, int i, int j)
-    {
-            ajoutVoisinSiExist(voisins, j-1, i);
-            ajoutVoisinSiExist(voisins, j-1, i+1);
-            ajoutVoisinSiExist(voisins, j, i+1);
-            ajoutVoisinSiExist(voisins, j, i-1);
-            ajoutVoisinSiExist(voisins, j+1, i);
-            ajoutVoisinSiExist(voisins, j+1, i-1);
+    private void ajouterVoisins(ArrayList<Case> voisins, int i, int j) {
+        ajoutVoisinSiExist(voisins, j-1, i);
+        ajoutVoisinSiExist(voisins, j-1, i+1);
+        ajoutVoisinSiExist(voisins, j, i+1);
+        ajoutVoisinSiExist(voisins, j, i-1);
+        ajoutVoisinSiExist(voisins, j+1, i);
+        ajoutVoisinSiExist(voisins, j+1, i-1);
     }
     
     /**
      * @return Hauteur du monde en nombre de cases
      */
-    public int getHauteurLogique()
-    {
+    public int getHauteurLogique() {
         return hauteurLogique;
     }
     
     /**
      * @return Largeur du monde en nombre de cases
      */
-    public int getLargeurLogique()
-    {
+    public int getLargeurLogique() {
         return largeurLogique;
     }
     
@@ -199,15 +174,11 @@ public class Monde {
      * Calcul la largeur du monde en nombre de cases
      * @return Largeur du monde en nombre de cases
      */
-    private int calculLargeurLogique()
-    {
+    private int calculLargeurLogique() {
         int compteur = 0;
-        for(int j=0;j<longueurMax; j++)
-        {
-            for(int i = 0; i<longueurMax ; i++)
-            {
-                if(damier[i][j]!=null)
-                {
+        for(int j=0;j<longueurMax; j++) {
+            for(int i = 0; i<longueurMax; i++) {
+                if(damier[i][j]!=null) {
                     compteur++;
                     break;
                 }
@@ -220,15 +191,11 @@ public class Monde {
      * Calcul la hauteur du monde en nombre de cases
      * @return Hauteur du monde en nombre de cases
      */
-    private int calculHauteurLogique()
-    {
+    private int calculHauteurLogique() {
         int compteur = 0;
-        for(int i=0;i<longueurMax; i++)
-        {
-            for(int j = 0; j<longueurMax ; j++)
-            {
-                if(damier[i][j]!=null)
-                {
+        for(int i=0;i<longueurMax; i++) {
+            for(int j = 0; j<longueurMax; j++) {
+                if(damier[i][j]!=null) {
                     compteur++;
                     break;
                 }

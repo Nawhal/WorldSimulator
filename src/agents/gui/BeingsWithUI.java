@@ -29,22 +29,23 @@ public class BeingsWithUI extends GUIState {
 	public JFrame displayFrame;
 	HexaObjectGridPortrayal2D yardPortrayal = new HexaObjectGridPortrayal2D();
 	
-	public BeingsWithUI(SimState state) {
+	public BeingsWithUI (SimState state) {
 		super(state);
 	}
-	public static String getName() {
+	public static String getName () {
 		return "Simulation de créatures"; 
 	}
-	public void start() {
-	  super.start();
-	  setupPortrayals();
+	public void start () {
+        super.start();
+        setupPortrayals();
 	}
 
-	public void load(SimState state) {
-	  super.load(state);
-	  setupPortrayals();
+	public void load (SimState state) {
+        super.load(state);
+        setupPortrayals();
 	}
-	public void setupPortrayals() {
+
+	public void setupPortrayals () {
 	  Map map = (Map) state;
 	  yardPortrayal.setField(map.yard );
 	  yardPortrayal.setPortrayalForClass(Dieu1.class, getD1Portrayal());
@@ -52,54 +53,56 @@ public class BeingsWithUI extends GUIState {
 	  yardPortrayal.setPortrayalForClass(Population.class, getPopPortrayal());
 	  display.reset();
 	  display.setBackdrop(Color.orange);
-		// redraw the display
+	  // redraw the display
 	  //addBackgroundImage();
 	  display.repaint();
 	}
-	private OvalPortrayal2D getPopPortrayal() {
+	private OvalPortrayal2D getPopPortrayal () {
 		OvalPortrayal2D r = new OvalPortrayal2D();
 		r.paint = Color.GRAY;
 		r.filled = true;
 		return r;
 	}
 
-	private OvalPortrayal2D getD1Portrayal() {
+	private OvalPortrayal2D getD1Portrayal () {
 		OvalPortrayal2D r = new OvalPortrayal2D();
 		r.paint = Color.RED;
 		r.filled = true;
 		return r;
 	}
-	private OvalPortrayal2D getD2Portrayal() {
+	private OvalPortrayal2D getD2Portrayal () {
 		OvalPortrayal2D r = new OvalPortrayal2D();
 		r.paint = Color.BLUE;
 		r.filled = true;
 		return r;
 	}
 
-	public void init(Controller c) {
-		  super.init(c);
-		  display = new Display2D(FRAME_SIZE,FRAME_SIZE,this);
-		  display.setClipping(false);
-		  displayFrame = display.createFrame();
-		  displayFrame.setTitle("Map");
-		  c.registerFrame(displayFrame); // so the frame appears in the "Display" list
-		  displayFrame.setVisible(true);
-		  display.attach( yardPortrayal, "Yard" );
-		}
-	private void addBackgroundImage() {
-	  Image i = new ImageIcon(getClass().getResource("back.jpg")).getImage();
-	  int w = i.getWidth(null)/5;
-	  int h = i.getHeight(null)/5;
-	  BufferedImage b = display.getGraphicsConfiguration().createCompatibleImage(w,h);
-	  Graphics g = b.getGraphics();
-	  g.drawImage(i,0,0,w,h,null);
-	  g.dispose();
-	  display.setBackdrop(new TexturePaint(b, new Rectangle(0,0,w,h)));
+	public void init (Controller c) {
+		super.init(c);
+		display = new Display2D(FRAME_SIZE,FRAME_SIZE,this);
+		display.setClipping(false);
+		displayFrame = display.createFrame();
+		displayFrame.setTitle("Map");
+		c.registerFrame(displayFrame); // so the frame appears in the "Display" list
+		displayFrame.setVisible(true);
+		display.attach( yardPortrayal, "Yard" );
 	}
-	public  Object  getSimulationInspectedObject()  {  return  state;  }
-	public  Inspector  getInspector() {
-	Inspector  i  =  super.getInspector();
-	  i.setVolatile(true);
-	  return  i;
+
+	private void addBackgroundImage () {
+        Image i = new ImageIcon(getClass().getResource("back.jpg")).getImage();
+        int w = i.getWidth(null)/5;
+        int h = i.getHeight(null)/5;
+        BufferedImage b = display.getGraphicsConfiguration().createCompatibleImage(w,h);
+        Graphics g = b.getGraphics();
+        g.drawImage(i,0,0,w,h,null);
+        g.dispose();
+        display.setBackdrop(new TexturePaint(b, new Rectangle(0,0,w,h)));
+	}
+
+	public Object getSimulationInspectedObject () { return state; }
+	public Inspector getInspector() {
+        Inspector i = super.getInspector();
+        i.setVolatile(true);
+        return i;
 	}
 }
