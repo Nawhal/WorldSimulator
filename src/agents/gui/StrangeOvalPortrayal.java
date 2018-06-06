@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import sim.portrayal.DrawInfo2D;
 import sim.portrayal.simple.OvalPortrayal2D;
-import agents.model.Population;
+import agents.model.AgentPopulation;
 
 public class StrangeOvalPortrayal extends OvalPortrayal2D {
 
@@ -17,7 +17,7 @@ public class StrangeOvalPortrayal extends OvalPortrayal2D {
 
 	@Override
 	public void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
-		Population agent = (Population)object;
+		AgentPopulation agent = (AgentPopulation)object;
 		if (agent.x % 5 == 0 && agent.y % 5 == 0)
            scale = 2; 
 		else scale = 1;

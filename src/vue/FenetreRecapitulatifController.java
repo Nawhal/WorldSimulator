@@ -3,6 +3,7 @@ package vue;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import agents.main.MasonSimulation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -129,8 +130,9 @@ public class FenetreRecapitulatifController implements Initializable {
         }
         
         
-        Monde m = new Monde(infosMonde);
+        Monde monde = new Monde(infosMonde);
         // TODO Ouvrir MASON et lancer agents
+        MasonSimulation.runUI(monde);
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }

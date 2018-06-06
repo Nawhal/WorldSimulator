@@ -1,58 +1,56 @@
 package agents.model;
 
-import sim.engine.Schedule;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import metier.Dieu;
 import metier.Race;
 import metier.StrategieDeJeu;
-import sim.engine.Stoppable;
 import sim.util.Int2D;
 
-public class Population implements Steppable {
-	private Dieu dieu;
-	private String name;
-	private StrategieDeJeu strat;
-	private Race race;
-	private int numberInhabitants = 1;
-	public static int MAX_POPULATION = 100;
+public class AgentPopulation implements Steppable {
+    private Dieu dieu;
+    private String name;
+    private StrategieDeJeu strat;
+    private Race race;
+    private int numberInhabitants = 1;
+    public static int MAX_POPULATION = 100;
     public int x, y;
 
     private void grow () {
-    	this.numberInhabitants += 1;
-	}
+        this.numberInhabitants += 1;
+    }
 
-	protected void expend (SimState state) {
-		Map map = (Map) state;
-		Population p = new Population();
-		Int2D location = map.getFreeLocation(this.x, this.y);
-		if (location != null) {
+    protected void expend (SimState state) {
+        Map map = (Map) state;
+        AgentPopulation p = new AgentPopulation();
+        Int2D location = map.getFreeLocation(this.x, this.y);
+        if (location != null) {
             map.yard.set(location.x, location.y, p);
             p.x = location.x;
             p.y = location.y;
             map.schedule.scheduleRepeating(p);
         }
-	}
+    }
 
-	@Override
-	public void step (SimState state) {
+    @Override
+    public void step (SimState state) {
         if(this.numberInhabitants == 0) {
             state.schedule.scheduleRepeating(this).stop();
             return;
         }
-		Map map = (Map) state;
-		boolean fight = false;
+        Map map = (Map) state;
+        boolean fight = false;
 
-		Population adv = map.getAdversaryLocation(this.x, this.y, this);
-		if(adv != null) {
+        AgentPopulation adv = map.getAdversaryLocation(this.x, this.y, this);
+        if (adv != null) {
             attaquer(adv, map);
         }
 
-		if(!fight) { // On imagine que si un Dieu a combattu, il ne peux pas grossir le même tour
-            if(this.numberInhabitants < MAX_POPULATION) this.grow();
+        if (!fight) { // On imagine que si un Dieu a combattu, il ne peux pas grossir le même tour
+            if (this.numberInhabitants < MAX_POPULATION) this.grow();
             else this.expend(state);
         }
-		//System.out.println(this.numberInhabitants);
+        //System.out.println(this.numberInhabitants);
     }
 
     public void checkTerrain () {
@@ -68,10 +66,7 @@ public class Population implements Steppable {
         this.numberInhabitants = 0;
         map.yard.set(this.x, this.y, null);
     }
-
-    public boolean attaquer (Population ennemi, Map map)
-    {
-
+    public boolean attaquer (AgentPopulation ennemi, Map map) {
         //System.out.println("test2");
         if (ennemi.defendre(this, map))
             return true;
@@ -88,7 +83,7 @@ public class Population implements Steppable {
         return this.numberInhabitants;
     }
 
-    private boolean defendre (Population attaquant, Map map) {
+    private boolean defendre (AgentPopulation attaquant, Map map) {
         //System.out.println("test");
         checkTerrain(); // Il faudra checker si le terrain nous donne un aventage
         //float ratioDefenseur = getRatioPuissanceAttaque(getCasePop().getTerrain());//le terrain de l'attaque est le terrain du defenseur

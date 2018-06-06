@@ -3,7 +3,7 @@ package agents.model;
 import sim.engine.SimState;
 import sim.util.Int2D;
 
-public class Dieu1 extends Population{
+public class Dieu1 extends AgentPopulation {
 
     public void expend (SimState state) {
         Map map = (Map) state;
