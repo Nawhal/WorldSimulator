@@ -4,23 +4,25 @@
 
 - Intellij IDEA ou Eclipse si vous n'avez pas d'âme
 - MASON
-- JavaFX / FXML (mais on y touchera pas/peu normalement)
+- JavaFX / FXML (mais on y touchera pas normalement)
 
-## Partage de travail avant le soon
+## TODO plus tard
+- Création d'agents après choix
+- Rapport à rédiger ET IMPRIMER
+- Diapo pour la soutenance
+- D'autres choses auxquelles je ne pense pas tout de suite
+
+## Partage de travail avant le 08/06/18
 
 ### Nawhal
-- ~~Refactor le metier (enlever logique hexagone)~~
-- ~~Supprimer la vue inutile ainsi que la logique des hexagones~~
-- Refactor du futur (faire ce qui manque et mettre du ciment de partout)
+- Refactor la classe Monde
 
 ### Cédric
-- ~~Case avec terrain spécifique => Objet Terrain sur chaque case~~
 - Gestion des combats
+- Aider Luca à terminer l'agent Population si besoin
 
 ### Luca
-- Création de l'agent Population qui utilisent le métier avec accroissement
+- Terminer l'agent Population
 
 ### Felipe
-- ~~Hex Grid => Comment ?~~
-- Génération d'agents depuis la fenêtre de configuration
 - Portrayal pour les Populations

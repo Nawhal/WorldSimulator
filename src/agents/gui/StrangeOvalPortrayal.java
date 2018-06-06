@@ -11,8 +11,8 @@ public class StrangeOvalPortrayal extends OvalPortrayal2D {
 
 	public StrangeOvalPortrayal() {
 		super();
-	paint = Color.GRAY;
-	filled = true;
+		paint = Color.GRAY;
+		filled = true;
 	}
 
 	@Override
@@ -23,6 +23,4 @@ public class StrangeOvalPortrayal extends OvalPortrayal2D {
 		else scale = 1;
 		super.draw(object, graphics, info);
 	}
-	
-
 }

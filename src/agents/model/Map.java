@@ -83,22 +83,22 @@ public class Map extends SimState {
 		boolean t = false;
 		Population adversary = null;
 		if(inGrid(x - 1,y) && yard.get(x - 1,y) != null && !p.equals(yard.get(x - 1,y)) && t == false) {
-			adversary = yard.get(x - 1,y);
+			adversary = (Population) yard.get(x - 1,y);
 			t = true;
 		}
 
 		if(inGrid(x + 1,y) && yard.get(x + 1,y) != null && !p.equals(yard.get(x + 1,y)) && t == false) {
-			adversary = yard.get(x + 1,y);
+			adversary = (Population) yard.get(x + 1,y);
 			t = true;
 		}
 
 		if(inGrid(x,y - 1) && yard.get(x,y - 1) != null && !p.equals(yard.get(x,y - 1)) && t == false) {
-			adversary = yard.get(x,y - 1);
+			adversary = (Population) yard.get(x,y - 1);
 			t = true;
 		}
 
 		if(inGrid(x,y + 1) && yard.get(x,y + 1) != null && !p.equals(yard.get(x,y + 1)) && t == false) {
-			adversary = yard.get(x,y + 1);
+			adversary = (Population) yard.get(x,y + 1);
 		}
 
 		return adversary;
