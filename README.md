@@ -6,16 +6,12 @@
 - MASON
 - JavaFX / FXML (mais on y touchera pas normalement)
 
-## TODO plus tard
-- Création d'agents après choix
-- Rapport à rédiger ET IMPRIMER
-- Diapo pour la soutenance
-- D'autres choses auxquelles je ne pense pas tout de suite
-
-## Partage de travail avant le 08/06/18
+## Partage de travail
 
 ### Nawhal
 - Refactor la classe Monde
+- Création d'agents après choix
+- Diapo pour la soutenance
 
 ### Cédric
 - Gestion des combats
@@ -23,6 +19,7 @@
 
 ### Luca
 - Terminer l'agent Population
+- Rapport à rédiger ET IMPRIMER
 
 ### Felipe
 - Portrayal pour les Populations
