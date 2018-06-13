@@ -73,7 +73,7 @@ public class AgentPopulation implements Steppable {
 
     public void tuer (Map map) {
         this.numberInhabitants = 0;
-        map.yard.setObjectLocation(null,this.x, this.y);
+        map.yard.remove(this);
     }
     public boolean attaquer (AgentPopulation ennemi, Map map) {
         //System.out.println("test2");

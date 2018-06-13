@@ -20,6 +20,7 @@ import sim.display.GUIState;
 import sim.engine.SimState;
 import sim.portrayal.Inspector;
 import sim.portrayal.grid.HexaObjectGridPortrayal2D;
+import sim.portrayal.grid.HexaSparseGridPortrayal2D;
 import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.HexagonalPortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
@@ -32,7 +33,7 @@ public class BeingsWithUI extends GUIState {
     public Display2D display;
     public JFrame displayFrame;
 
-    private SparseGridPortrayal2D yardPortrayal = new SparseGridPortrayal2D();
+    private HexaSparseGridPortrayal2D yardPortrayal = new HexaSparseGridPortrayal2D();
     private Monde monde;
 
     public BeingsWithUI (SimState state, Monde monde) {
@@ -53,22 +54,22 @@ public class BeingsWithUI extends GUIState {
         super.load(state);
         setupPortrayals();
     }
-    public HexagonalPortrayal2D getTerrainPortRayal() {
+    /*public HexagonalPortrayal2D getTerrainPortRayal() {
 		TerrainPortrayal hexPort2D = new TerrainPortrayal();
 		return hexPort2D;
-	}
+	}*/
 
     public void setupPortrayals () {
         Map map = (Map) state;
         yardPortrayal.setField(map.yard);
         // TODO When hexagons ready => set same portrayal for everyone and handle the color in portrayal
         //yardPortrayal.setPortrayalForClass(Map.class, getTerrainPortRayal());
-        yardPortrayal.setPortrayalForClass(Terrain.class, getTerrainPortRayal());
         yardPortrayal.setPortrayalForClass(Dieu1.class, getD1Portrayal());
         yardPortrayal.setPortrayalForClass(Dieu2.class, getD2Portrayal());
         yardPortrayal.setPortrayalForClass(AgentPopulation.class, getPopPortrayal());
+        //yardPortrayal.setPortrayalForClass (Terrain.class, getTerrainPortRayal());
         display.reset();
-        display.setBackdrop(Color.orange);
+        display.setBackdrop(Color.GREEN);
         // redraw the display
         // addBackgroundImage();
         display.repaint();

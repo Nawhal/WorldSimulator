@@ -21,7 +21,7 @@ public class TerrainPortrayal extends HexagonalPortrayal2D{
 	public void draw(Object arg0, Graphics2D arg1, DrawInfo2D arg2) {
 		// TODO Auto-generated method stub
 		//AgentType agent = (AgentType)arg0;
-		scale = 5;	
+		scale = 1;
 	 
 		super.draw(arg0, arg1, arg2);
 	}
