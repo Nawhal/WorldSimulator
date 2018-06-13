@@ -11,7 +11,16 @@ public class AgentPopulation implements Steppable {
     private Dieu dieu;
     private String name;
     private StrategieDeJeu strat;
-    private Race race;
+    public int NUMBER_TERRAIN = 5;
+    public int getNUMBER_TERRAIN() {
+		return NUMBER_TERRAIN;
+	}
+
+	public void setNUMBER_TERRAIN(int nUMBER_TERRAIN) {
+		NUMBER_TERRAIN = nUMBER_TERRAIN;
+	}
+
+	private Race race;
     private int numberInhabitants = 1;
     public static int MAX_POPULATION = 100;
     public int x, y;
@@ -25,7 +34,7 @@ public class AgentPopulation implements Steppable {
         AgentPopulation p = new AgentPopulation();
         Int2D location = map.getFreeLocation(this.x, this.y);
         if (location != null) {
-            map.yard.set(location.x, location.y, p);
+            map.yard.setObjectLocation(p,location.x, location.y);
             p.x = location.x;
             p.y = location.y;
             map.schedule.scheduleRepeating(p);
@@ -64,7 +73,7 @@ public class AgentPopulation implements Steppable {
 
     public void tuer (Map map) {
         this.numberInhabitants = 0;
-        map.yard.set(this.x, this.y, null);
+        map.yard.setObjectLocation(null,this.x, this.y);
     }
     public boolean attaquer (AgentPopulation ennemi, Map map) {
         //System.out.println("test2");

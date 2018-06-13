@@ -10,7 +10,7 @@ public class Dieu2 extends AgentPopulation {
         Dieu2 p = new Dieu2();
         Int2D location = map.getFreeLocation(this.x, this.y);
         if (location != null) {
-            map.yard.set(location.x, location.y, p);
+            map.yard.setObjectLocation(p,location.x, location.y);
             p.x = location.x;
             p.y = location.y;
             map.schedule.scheduleRepeating(p);

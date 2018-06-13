@@ -1,13 +1,9 @@
-package gui;
+package agents.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 
-
-
-import model.AgentPopulation;
-import model.AgentType;
 import sim.portrayal.DrawInfo2D;
 import sim.portrayal.simple.HexagonalPortrayal2D;
 
@@ -24,8 +20,9 @@ public class TerrainPortrayal extends HexagonalPortrayal2D{
 	@Override
 	public void draw(Object arg0, Graphics2D arg1, DrawInfo2D arg2) {
 		// TODO Auto-generated method stub
-		AgentType agent = (AgentType)arg0;
-		scale = 8;				
+		//AgentType agent = (AgentType)arg0;
+		scale = 5;	
+	 
 		super.draw(arg0, arg1, arg2);
 	}
 
