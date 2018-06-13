@@ -68,6 +68,16 @@ public class Map extends SimState {
     }
 
     private void initTestBattle () {
+
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for(int j = 0; j < GRID_SIZE; j++) {
+                Random r = new Random();
+                int rdmterr = r.nextInt(10); //On génère un int entre 0 et 10 (pour le moment, à voir plus tard pour créer les terrains selon les valeurs de l'UI
+                Terrain a = new Terrain("Terrain"+ i, rdmterr);
+                yard.setObjectLocation(a, i, j);
+                schedule.scheduleRepeating(a);
+            }
+        }
     	//int tmp = GRID_SIZE;
         Dieu1 p = new Dieu1();
         yard.setObjectLocation(p, 0, 0);
@@ -80,17 +90,7 @@ public class Map extends SimState {
         q.x = 19;
         q.y = 19;
         schedule.scheduleRepeating(q);
-        agentsDieux.add(p);
-        agentsDieux.add(q);
-        for (int i = 0; i < GRID_SIZE; i++) {
-            for(int j = 0; j < GRID_SIZE; j++) {
-                Random r = new Random();
-                int rdmterr = r.nextInt(10); //On génère un int entre 0 et 10 (pour le moment, à voir plus tard pour créer les terrains selon les valeurs de l'UI
-                Terrain a = new Terrain("Terrain"+ i, rdmterr);
-                yard.setObjectLocation(a, i, j);
-                schedule.scheduleRepeating(a);
-            }
-        }
+
     	
     }
 
@@ -114,10 +114,21 @@ public class Map extends SimState {
 
     public Int2D getFreeLocation (int x, int y) {
         Bag bb = null;
+        boolean hasOnlyTerrain = false;
         if(inGrid(x - 1,y)) {
             bb = yard.getObjectsAtLocation(x - 1,y);
             if(bb == null || bb.isEmpty()) {
                 return new Int2D(x - 1,y);
+            } else {
+                hasOnlyTerrain = true;
+                for(Object obj : bb) {
+                    if(! (obj instanceof Terrain)) {
+                        hasOnlyTerrain = false;
+                    }
+                }
+                if(hasOnlyTerrain) {
+                    return new Int2D(x - 1,y);
+                }
             }
 
         }
@@ -125,18 +136,48 @@ public class Map extends SimState {
             bb = yard.getObjectsAtLocation(x + 1,y);
             if(bb == null || bb.isEmpty()) {
                 return new Int2D(x + 1,y);
+            }else {
+                hasOnlyTerrain = true;
+                for(Object obj : bb) {
+                    if(! (obj instanceof Terrain)) {
+                        hasOnlyTerrain = false;
+                    }
+                }
+                if(hasOnlyTerrain) {
+                    return new Int2D(x + 1,y);
+                }
             }
         }
         if(inGrid(x,y - 1)) {
             bb = yard.getObjectsAtLocation(x,y - 1);
             if(bb == null || bb.isEmpty()) {
                 return new Int2D(x,y - 1);
+            } else {
+                hasOnlyTerrain = true;
+                for(Object obj : bb) {
+                    if(! (obj instanceof Terrain)) {
+                        hasOnlyTerrain = false;
+                    }
+                }
+                if(hasOnlyTerrain) {
+                    return new Int2D(x,y - 1);
+                }
             }
         }
         if(inGrid(x,y + 1)) {
             bb = yard.getObjectsAtLocation(x,y + 1);
             if(bb == null || bb.isEmpty()) {
                 return new Int2D(x,y + 1);
+            } else {
+                hasOnlyTerrain = true;
+                for(Object obj : bb) {
+                    if(! (obj instanceof Terrain)) {
+                        hasOnlyTerrain = false;
+                    }
+                }
+                if(hasOnlyTerrain) {
+                    return new Int2D(x,y + 1);
+                }
             }
         }
         return null;

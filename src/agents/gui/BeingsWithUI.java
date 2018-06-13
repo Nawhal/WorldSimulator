@@ -23,6 +23,7 @@ import sim.portrayal.grid.HexaObjectGridPortrayal2D;
 import sim.portrayal.grid.HexaSparseGridPortrayal2D;
 import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.HexagonalPortrayal2D;
+import sim.portrayal.simple.AbstractShapePortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 import agents.model.AgentPopulation;
 import agents.model.Dieu1;
@@ -54,10 +55,6 @@ public class BeingsWithUI extends GUIState {
         super.load(state);
         setupPortrayals();
     }
-    /*public HexagonalPortrayal2D getTerrainPortRayal() {
-		TerrainPortrayal hexPort2D = new TerrainPortrayal();
-		return hexPort2D;
-	}*/
 
     public void setupPortrayals () {
         Map map = (Map) state;
@@ -66,8 +63,8 @@ public class BeingsWithUI extends GUIState {
         //yardPortrayal.setPortrayalForClass(Map.class, getTerrainPortRayal());
         yardPortrayal.setPortrayalForClass(Dieu1.class, getD1Portrayal());
         yardPortrayal.setPortrayalForClass(Dieu2.class, getD2Portrayal());
-        yardPortrayal.setPortrayalForClass(AgentPopulation.class, getPopPortrayal());
-        //yardPortrayal.setPortrayalForClass (Terrain.class, getTerrainPortRayal());
+        //yardPortrayal.setPortrayalForClass(AgentPopulation.class, getPopPortrayal());
+        yardPortrayal.setPortrayalForClass (Terrain.class, getTerrainPortRayal());
         display.reset();
         display.setBackdrop(Color.GREEN);
         // redraw the display
@@ -77,9 +74,14 @@ public class BeingsWithUI extends GUIState {
 
     private OvalPortrayal2D getPopPortrayal () {
         OvalPortrayal2D r = new OvalPortrayal2D();
-        r.paint = Color.GRAY;
+        r.paint = Color.RED;
         r.filled = true;
         return r;
+    }
+    public TerrainPortrayal getTerrainPortRayal() {
+        TerrainPortrayal hexPort2D = new TerrainPortrayal();
+        //AbstractShapePortrayal2D hexPort2D = new AbstractShapePortrayal2D();
+        return hexPort2D;
     }
 
     private OvalPortrayal2D getD1Portrayal () {
@@ -105,17 +107,6 @@ public class BeingsWithUI extends GUIState {
         c.registerFrame(displayFrame); // so the frame appears in the "Display" list
         displayFrame.setVisible(true);
         display.attach(yardPortrayal, "Yard");
-    }
-
-    private void addBackgroundImage () {
-        Image i = new ImageIcon(getClass().getResource("back.jpg")).getImage();
-        int w = i.getWidth(null) / 5;
-        int h = i.getHeight(null) / 5;
-        BufferedImage b = display.getGraphicsConfiguration().createCompatibleImage(w, h);
-        Graphics g = b.getGraphics();
-        g.drawImage(i, 0, 0, w, h, null);
-        g.dispose();
-        display.setBackdrop(new TexturePaint(b, new Rectangle(0, 0, w, h)));
     }
 
     public Object getSimulationInspectedObject () {

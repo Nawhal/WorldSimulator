@@ -12,8 +12,9 @@ public class TerrainPortrayal extends HexagonalPortrayal2D{
 	public TerrainPortrayal() {
 		super();
 		float[] hsb = new float[3];
-		paint = Color.decode("#417378");
-		filled = true;
+		//paint = Color.decode("#417378");
+		paint = Color.GRAY;
+		filled = false;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,7 +23,7 @@ public class TerrainPortrayal extends HexagonalPortrayal2D{
 		// TODO Auto-generated method stub
 		//AgentType agent = (AgentType)arg0;
 		scale = 1;
-	 
+
 		super.draw(arg0, arg1, arg2);
 	}
 
