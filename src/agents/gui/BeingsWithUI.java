@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import agents.model.Map;
-import agents.model.Terrain;
+import metier.Terrain;
 
 import metier.Monde;
 import sim.display.Controller;

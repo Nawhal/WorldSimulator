@@ -3,6 +3,8 @@ package metier;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import metier.Terrain;
+
 // TODO Change all that
 /**
  *

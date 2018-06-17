@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javafx.scene.paint.Color;
+import metier.Dieu;
 import metier.Monde;
+import metier.Race;
+
+import metier.Terrain;
 
 import sim.engine.SimState;
 import sim.field.grid.ObjectGrid2D;
@@ -72,19 +77,24 @@ public class Map extends SimState {
         for (int i = 0; i < GRID_SIZE; i++) {
             for(int j = 0; j < GRID_SIZE; j++) {
                 Random r = new Random();
-                int rdmterr = r.nextInt(10); //On génère un int entre 0 et 10 (pour le moment, à voir plus tard pour créer les terrains selon les valeurs de l'UI
-                Terrain a = new Terrain("Terrain"+ i, rdmterr);
+                String nomTerrain = "Plaine";
+
+                Terrain a = new Terrain(nomTerrain, 1.0f, 1.1f);
                 yard.setObjectLocation(a, i, j);
-                schedule.scheduleRepeating(a);
             }
         }
     	//int tmp = GRID_SIZE;
-        Dieu1 p = new Dieu1();
+        Race r = new Race("Nymphe", 0.9f, 1.1f);
+        Dieu d = new Dieu("Chauntéa, Déesse des Plaines", "Plaine", 0.9f, 1.5f, 0.9f, 2.5f, Color.ORANGE, "design/Chauntea.jpg");
+
+        Dieu1 p = new Dieu1(d,r);
         yard.setObjectLocation(p, 0, 0);
         p.x = 0;
         p.y = 0;
         schedule.scheduleRepeating(p);
-        Dieu2 q = new Dieu2();
+        Race r2 = new Race("Elfe", 0.95f, 1.05f);
+        Dieu d2 = new Dieu("Heruwa, Dieu des déserts", "Désert", 0.9f, 1.5f, 0.9f, 1.5f, Color.ANTIQUEWHITE, "design/Heruwa.jpg");
+        Dieu2 q = new Dieu2(d2, r2);
 
         yard.setObjectLocation(q,19,19);
         q.x = 19;
@@ -94,12 +104,13 @@ public class Map extends SimState {
     	
     }
 
-  private void initAgentPopulation() {
+  private void initAgentPopulation(Dieu d, Race r, int x, int y) {
 	  
-		AgentPopulation p = new AgentPopulation();
-        yard.setObjectLocation(p,5, 5);
-        p.x = 5;
-        p.y = 5;
+		AgentPopulation p = new AgentPopulation(d, r);
+        yard.setObjectLocation(p,x, y);
+        p.x = x;
+        p.y = y;
+        schedule.scheduleRepeating(p);
   }
 
     public boolean free (int x, int y) {
@@ -224,6 +235,20 @@ public class Map extends SimState {
                 return adversary;
             }
 
+        }
+        return null;
+    }
+
+    public Terrain getTerrain(int x, int y) {
+        if(inGrid(x,y)) {
+            Bag bag = yard.getObjectsAtLocation(x, y);
+            if(bag != null) {
+                for(Object o : bag) {
+                    if(o instanceof Terrain) {
+                        return (Terrain) o;
+                    }
+                }
+            }
         }
         return null;
     }
