@@ -6,7 +6,7 @@ package metier;
  */
 public class Population {
     
-    public static final int MAX_POPULATION = 100;
+    public static final int MAX_POPULATION = 10000;
     
     private String nom;
         /** @return Nom de la population */

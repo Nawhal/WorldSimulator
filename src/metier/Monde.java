@@ -1,6 +1,9 @@
 package metier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import metier.Terrain;
@@ -16,11 +19,17 @@ public class Monde {
         /** @return Damier représentant le monde */
         public Case[][] getDamier () {return damier;}
 
-    private final int longueurMax;    
+    private final int longueurMax;
+
+    public int getLongueurMax() {
+        return this.longueurMax;
+    }
     private int hauteurLogique;
     private int largeurLogique;
+    private MondeInfos mondeInfos;
 
     public Monde (MondeInfos mondeInfos) {
+        this.mondeInfos = mondeInfos;
         int nbCase = calculerNbCase(mondeInfos);
         this.longueurMax = (int)Math.sqrt(nbCase)+1;
         damier = new Case[longueurMax][longueurMax];
@@ -28,6 +37,10 @@ public class Monde {
         genererDamierCaseVide(nbCase);
         genererTerrainCase(mondeInfos, nbCase);
         mettrePopulationsDansCases(mondeInfos, nbCase);
+    }
+
+    public HashMap<Dieu, Population> getPopulation() {
+        return this.mondeInfos.getPopulations();
     }
     
     /**
@@ -68,7 +81,7 @@ public class Monde {
      * Obtient la liste des cases du damier
      * @return Liste des Cases du damier
      */
-    private ArrayList<Case> getListeCase () {
+    public ArrayList<Case> getListeCase () {
         ArrayList<Case> listeCases = new ArrayList<>();
         for(Case tabC[]: damier) {
             for(Case c: tabC) {

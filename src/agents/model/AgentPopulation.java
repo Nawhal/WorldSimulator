@@ -29,6 +29,9 @@ public class AgentPopulation implements Steppable {
         this.race = race;
     }
 
+    public Dieu getDieu() {
+        return this.dieu;
+    }
     private void grow () {
         this.numberInhabitants += 1;
     }
@@ -167,6 +170,6 @@ public class AgentPopulation implements Steppable {
 
 
     public int getIdDieu() {
-        return 0;
+        return this.dieu.hashCode();
     }
 }

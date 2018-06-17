@@ -27,8 +27,4 @@ public class Dieu1 extends AgentPopulation {
         super.step(state);
     }
 
-    @Override
-    public int getIdDieu() {
-        return 1;
-    }
 }

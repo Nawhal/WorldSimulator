@@ -72,7 +72,7 @@ public class FenetreChoixTerrainController implements Initializable {
     {
         for (int i=0; i<spTerrains.size(); i++)
         {
-            spTerrains.get(i).setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 20, 5, 1));
+            spTerrains.get(i).setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 50, 10));
         }
         setSpinnersToInfosMonde();
     }
@@ -97,12 +97,12 @@ public class FenetreChoixTerrainController implements Initializable {
     private void reinitializeInfosMondeTerrains()
     {
         infosMonde.getTerrains().clear();
-        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Plaine"), 5);
-        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Montagne"), 5);
-        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Désert"), 5);
-        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Côte"), 5);
-        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Forêt"), 5);
-        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Tundra"), 5);
+        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Plaine"), 25);
+        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Montagne"), 25);
+        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Désert"), 25);
+        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Côte"), 25);
+        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Forêt"), 25);
+        infosMonde.getTerrains().put(FabriqueTerrain.fabriquerTerrain("Tundra"), 25);
     }
     
     /**

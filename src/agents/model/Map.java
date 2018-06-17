@@ -1,16 +1,11 @@
 package agents.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import javafx.scene.paint.Color;
-import metier.Dieu;
-import metier.Monde;
-import metier.Race;
+import metier.*;
 
 import metier.Terrain;
-
 import sim.engine.SimState;
 import sim.field.grid.ObjectGrid2D;
 import sim.field.grid.SparseGrid2D;
@@ -21,8 +16,10 @@ import sim.util.Int2D;
 public class Map extends SimState {
     private Monde monde;
 
-    public static int GRID_SIZE = 20;
-    public SparseGrid2D yard = new SparseGrid2D(GRID_SIZE, GRID_SIZE);
+    //public static int GRID_SIZE = 20;
+    //public SparseGrid2D yard = new SparseGrid2D(GRID_SIZE, GRID_SIZE);
+    public static int grid_size;
+    public SparseGrid2D yard;
     public int num_terrains = 5;
     public List<AgentPopulation> agentsDieux = new ArrayList<AgentPopulation>();
     
@@ -33,6 +30,9 @@ public class Map extends SimState {
 
 	public void setMonde(Monde monde) {
 		this.monde = monde;
+
+
+
 	}
 
 	public int getNum_terrains() {
@@ -54,6 +54,10 @@ public class Map extends SimState {
 	public Map (long seed, Monde monde) {
         super(seed);
         this.monde = monde;
+
+        this.grid_size = monde.getLongueurMax();
+        this.yard = new SparseGrid2D(grid_size, grid_size);
+
     }
 
     public SparseGrid2D getYard() {
@@ -68,14 +72,79 @@ public class Map extends SimState {
         System.out.println("Simulation started");
         super.start();
         yard.clear();
-        
-        initTestBattle();
+        int nbCasesTotal = grid_size * grid_size;
+        genererTerrainCase(this.monde, nbCasesTotal);
+        //initTestBattle();
+        genererDieux(monde);
     }
+
+
+
+    private void genererTerrainCase (Monde monde, int nbCase) {
+
+        ArrayList<Case> cases = monde.getListeCase();
+        int index = cases.size();
+        Random r = new Random();
+        while (index < nbCase) {
+            Case c = new Case(monde, 0);
+            c.setTerrain(new Terrain("Terrain neutre", 0f, 0f));
+
+            cases.add(r.nextInt(index), c);
+            index = cases.size();
+        }
+        for(int i = 0; i < grid_size; i++) {
+            for(int j = 0; j < grid_size; j++) {
+                index--;
+                if(index < 0) {
+                    Terrain a = new Terrain("Terrain neutre", 0f, 0f);
+                    yard.setObjectLocation(a, i, j);
+                } else {
+                    Case c = cases.get(index);
+                    Terrain t = new Terrain(c.getTerrain().getNom(), c.getTerrain().getBonusAccroissment(), c.getTerrain().getBonusPuissance());
+                    yard.setObjectLocation(t, i, j);
+                }
+            }
+        }
+
+        for(int i = 0; i < grid_size; i++) {
+            for(int j = 0; j < grid_size; j++) {
+                Bag b = yard.getObjectsAtLocation(i, j);
+                if(b == null)
+                    System.out.println(0);
+                else
+                    System.out.println(1);
+
+            }
+        }
+    }
+
+
+    private void genererDieux (Monde monde) {
+        HashMap<Dieu, Population> dieux = monde.getPopulation();
+
+        for (java.util.Map.Entry<Dieu, Population> entry : dieux.entrySet()) {
+            Random r = new Random();
+            Int2D free = null;
+            int x = -1;
+            int y = -1;
+            do {
+                x = r.nextInt(grid_size);
+                y = r.nextInt(grid_size);
+                free = getFreeLocation(x, y);
+            } while(free == null);
+            Dieu dieu = entry.getKey();
+            Race race = entry.getValue().getRacePop();
+            initAgentPopulation(dieu, race, x, y);
+        }
+
+    }
+
+
 
     private void initTestBattle () {
 
-        for (int i = 0; i < GRID_SIZE; i++) {
-            for(int j = 0; j < GRID_SIZE; j++) {
+        for (int i = 0; i < grid_size; i++) {
+            for(int j = 0; j < grid_size; j++) {
                 Random r = new Random();
                 String nomTerrain = "Plaine";
 
@@ -120,7 +189,7 @@ public class Map extends SimState {
     }
 
     private boolean inGrid (int x, int y) {
-        return (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE);
+        return (x >= 0 && x < grid_size && y >= 0 && y < grid_size);
     }
 
     public Int2D getFreeLocation (int x, int y) {

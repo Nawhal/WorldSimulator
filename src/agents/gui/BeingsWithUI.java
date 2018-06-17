@@ -63,7 +63,7 @@ public class BeingsWithUI extends GUIState {
         //yardPortrayal.setPortrayalForClass(Map.class, getTerrainPortRayal());
         yardPortrayal.setPortrayalForClass(Dieu1.class, getD1Portrayal());
         yardPortrayal.setPortrayalForClass(Dieu2.class, getD2Portrayal());
-        //yardPortrayal.setPortrayalForClass(AgentPopulation.class, getPopPortrayal());
+        yardPortrayal.setPortrayalForClass(AgentPopulation.class, getPopPortrayal());
         yardPortrayal.setPortrayalForClass (Terrain.class, getTerrainPortRayal());
         display.reset();
         display.setBackdrop(Color.GREEN);
@@ -73,8 +73,7 @@ public class BeingsWithUI extends GUIState {
     }
 
     private OvalPortrayal2D getPopPortrayal () {
-        OvalPortrayal2D r = new OvalPortrayal2D();
-        r.paint = Color.RED;
+        StrangeOvalPortrayal r = new StrangeOvalPortrayal();
         r.filled = true;
         return r;
     }

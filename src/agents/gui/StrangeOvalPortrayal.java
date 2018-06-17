@@ -18,9 +18,10 @@ public class StrangeOvalPortrayal extends OvalPortrayal2D {
 	@Override
 	public void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
 		AgentPopulation agent = (AgentPopulation)object;
-		if (agent.x % 5 == 0 && agent.y % 5 == 0)
-           scale = 2; 
-		else scale = 1;
+        int r = (int) (agent.getDieu().getCouleur().getRed() * 255);
+        int g = (int) (agent.getDieu().getCouleur().getGreen() * 255);
+        int b = (int) (agent.getDieu().getCouleur().getBlue() * 255);
+		paint = new Color(r, g, b);
 		super.draw(object, graphics, info);
 	}
 }
