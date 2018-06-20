@@ -34,15 +34,14 @@ public class AgentPopulation implements Steppable {
     public Dieu getDieu() {
         return this.dieu;
     }
-    private void grow () {
-        this.numberInhabitants += 1;
-    }
 
     protected void expend (SimState state) {
         Monde map = (Monde) state;
         AgentPopulation p = new AgentPopulation(dieu, race);
         Int2D location = map.getFreeLocation(this.x, this.y);
         if (location != null) {
+            this.setNombreHabitants(getNombreHabitants()/2);
+            p.setNombreHabitants(getNombreHabitants()/2);
             map.yard.setObjectLocation(p,location.x, location.y);
             p.x = location.x;
             p.y = location.y;
@@ -62,17 +61,13 @@ public class AgentPopulation implements Steppable {
         AgentPopulation adv = map.getAdversaryLocation(this.x, this.y, this);
         if (adv != null) {
             attaquer(adv, map);
+            fight = true;
         }
 
         if (!fight) { // On imagine que si un Dieu a combattu, il ne peux pas grossir le même tour
             if (this.numberInhabitants < MAX_POPULATION) this.grandir(map);
             else this.expend(state);
         }
-    }
-
-    public void checkTerrain () {
-        // Le plus simple serait de faire une grille contenant les types de terrains qui serait généré au début et stocker dans la map.
-        // Sinon il faut refaire la plupart des fonctions de récupération d'objet
     }
 
     public Int2D getPosition () {
