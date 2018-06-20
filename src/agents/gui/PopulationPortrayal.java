@@ -20,7 +20,7 @@ public class PopulationPortrayal extends HexagonalPortrayal2D {
         AgentPopulation agent = (AgentPopulation)object;
         javafx.scene.paint.Color color = agent.getDieu().getCouleur();
         paint = new Color((float) color.getRed(), (float) color.getGreen(), (float) color.getBlue(), (float) color.getOpacity());
-        //scale = agent.getNombreHabitants() / 1000;
+        scale = Math.round(agent.getNombreHabitants() / 10) / 100.0 - 0.05;
         super.draw(object, graphics, info);
 	}
 }

@@ -85,7 +85,7 @@ public class ValeursParDefaut {
         FabriqueTerrain.ajouterTerrain("Côte", 1.3f, 1f);
         FabriqueTerrain.ajouterTerrain("Forêt", 1.1f, 1.3f);
         FabriqueTerrain.ajouterTerrain("Tundra", 0.9f, 1f);
-        FabriqueTerrain.ajouterTerrain("Terrain Neutre", 0f, 0f);
+        FabriqueTerrain.ajouterTerrain("Terrain Neutre", 1f, 1f);
     }
     
     /**
