@@ -19,9 +19,6 @@ public class Monde extends SimState {
 
     private int grid_size;
     public SparseGrid2D yard;
-    private List<AgentPopulation> agentsDieux = new ArrayList<>();
-        public List<AgentPopulation> getAgents() { return agentsDieux; } // FIXME useful ?
-        public void setAgents(List<AgentPopulation> agents) { this.agentsDieux = agents; }
 
 	public Monde (long seed, MondeInfos mondeInfos) {
         super(seed);
@@ -31,8 +28,6 @@ public class Monde extends SimState {
         double squareRoot = Math.sqrt(nbCase);
         this.grid_size = squareRoot % 1 == 0 ? (int)squareRoot : (int)squareRoot + 1;
         this.yard = new SparseGrid2D(grid_size, grid_size);
-        genererTerrainCase();
-        mettrePopulationsDansCases();
     }
 
     /**
@@ -51,7 +46,8 @@ public class Monde extends SimState {
 	public void start () {
         System.out.println("Simulation started");
         super.start();
-        //initTestBattle();
+        genererTerrainCase();
+        mettrePopulationsDansCases();
     }
 
     /**
@@ -108,37 +104,6 @@ public class Monde extends SimState {
         p.y = coord.y;
         schedule.scheduleRepeating(p);
     }
-
-
-
-    private void initTestBattle () {
-
-        for (int i = 0; i < grid_size; i++) {
-            for(int j = 0; j < grid_size; j++) {
-                Random r = new Random();
-                String nomTerrain = "Plaine";
-
-                Terrain a = new Terrain(nomTerrain, 1.0f, 1.1f);
-                yard.setObjectLocation(a, i, j);
-            }
-        }
-    	//int tmp = GRID_SIZE;
-        Race r = new Race("Nymphe", 0.9f, 1.1f);
-        Dieu d = new Dieu("Chauntéa, Déesse des Plaines", "Plaine", 0.9f, 1.5f, 0.9f, 2.5f, Color.ORANGE, "design/Chauntea.jpg");
-
-//        Dieu1 p = new Dieu1(d,r);
-//        yard.setObjectLocation(p, 0, 0);
-//        p.x = 0;
-//        p.y = 0;
-//        schedule.scheduleRepeating(p);
-//        Race r2 = new Race("Elfe", 0.95f, 1.05f);
-//        Dieu d2 = new Dieu("Heruwa, Dieu des déserts", "Désert", 0.9f, 1.5f, 0.9f, 1.5f, Color.ANTIQUEWHITE, "design/Heruwa.jpg");
-//        Dieu2 q = new Dieu2(d2, r2);
-//        yard.setObjectLocation(q,19,19);
-//        q.x = 19;
-//        q.y = 19;
-//        schedule.scheduleRepeating(q);
-}
 
     public boolean free (int x, int y) {
         int xx = yard.stx(x);
