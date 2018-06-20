@@ -68,7 +68,6 @@ public class AgentPopulation implements Steppable {
             if (this.numberInhabitants < MAX_POPULATION) this.grandir(map);
             else this.expend(state);
         }
-        //System.out.println(this.numberInhabitants);
     }
 
     public void checkTerrain () {
@@ -122,27 +121,8 @@ public class AgentPopulation implements Steppable {
         tuer(map);
         attaquant.setNombreHabitants(attaquant.getNombreHabitants() - calculNbMortPourLeGagnant(attaquant, ratioEnnemi, this, ratioDefenseur)); // Calcul des "morts"
         return true;
-
-
-
-
-        /*
-        //System.out.println("test");
-        checkTerrain(); // Il faudra checker si le terrain nous donne un aventage
-        //float ratioDefenseur = getRatioPuissanceAttaque(getCasePop().getTerrain());//le terrain de l'attaque est le terrain du defenseur
-        //ratioDefenseur += getCasePop().getTerrain().getBonusPuissance();//le defenseur a droit a un bonus de defence car il connait le terrain ou il se trouve
-        //float ratioEnnemi = ennemi.getRatioPuissanceAttaque(getCasePop().getTerrain());
-
-        /*if( (ratioDefenseur*(float)getNombreHabitants()) >= (ratioEnnemi*(float)ennemi.getNombreHabitants()) )//defenseur gagne
-        {
-            //setNombreHabitants(getNombreHabitants() - calculNbMortPourLeGagnant(this, ratioDefenseur, attaquant, ratioEnnemi));//Calcul des "morts"
-            return false;
-        }*
-        tuer(map);
-        //attaquant.setNombreHabitants(attaquant.getNombreHabitants() - calculNbMortPourLeGagnant(ennemi, ratioEnnemi, this, ratioDefenseur));//Calcul des "morts"
-        //attaquant.setNombreHabitants(attaquant.getNombreHabitants() - (101 % attaquant.getNombreHabitants()) + 1);
-        return true;*/
     }
+
     private int calculNbMortPourLeGagnant (AgentPopulation gagnant, float ratioGagnant, AgentPopulation perdant, float ratioPerdant) {
         return (int)( ( (float)gagnant.getNombreHabitants() * (ratioPerdant*(float)perdant.getNombreHabitants()) ) / (ratioGagnant * (float)gagnant.getNombreHabitants()) );
     }
@@ -169,7 +149,6 @@ public class AgentPopulation implements Steppable {
             result *= this.dieu.getBonusTerrainAccroissement();
         return result;
     }
-
 
     public int getIdDieu() {
         return this.dieu.hashCode();

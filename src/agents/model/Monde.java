@@ -198,6 +198,7 @@ public class Monde extends SimState {
 		}
 		return null;
 	}
+
 	AgentPopulation getAdversaryLocation (int x, int y, AgentPopulation p) {
         AgentPopulation adversary;
 		if(inGrid(x - 1,y)) {
