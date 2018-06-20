@@ -85,6 +85,7 @@ public class ValeursParDefaut {
         FabriqueTerrain.ajouterTerrain("Côte", 1.3f, 1f);
         FabriqueTerrain.ajouterTerrain("Forêt", 1.1f, 1.3f);
         FabriqueTerrain.ajouterTerrain("Tundra", 0.9f, 1f);
+        FabriqueTerrain.ajouterTerrain("Terrain Neutre", 0f, 0f);
     }
     
     /**
@@ -92,12 +93,13 @@ public class ValeursParDefaut {
      */
     public static HashMap<Terrain, Color> couleurParTerrain () {
         HashMap<Terrain, Color> couleurParTerrain = new HashMap<>();
-        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Plaine"), Color.rgb(178, 255, 102, 0.3));
-        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Montagne"), Color.rgb(193, 127, 83, 0.3));
-        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Désert"), Color.rgb(228, 194, 128, 0.3));
-        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Côte"), Color.rgb(123, 223, 176, 0.3));
-        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Forêt"), Color.rgb(103, 142, 109, 0.3));
-        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Tundra"), Color.rgb(179, 201, 200, 0.3));
+        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Plaine"), Color.rgb(178, 255, 102, 0.6));
+        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Montagne"), Color.rgb(193, 127, 83, 0.6));
+        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Désert"), Color.rgb(228, 194, 128, 0.6));
+        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Côte"), Color.rgb(123, 223, 176, 0.6));
+        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Forêt"), Color.rgb(103, 142, 109, 0.6));
+        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Tundra"), Color.rgb(179, 201, 200, 0.6));
+        couleurParTerrain.put(FabriqueTerrain.fabriquerTerrain("Terrain Neutre"), Color.rgb(90, 90, 90, 0.6));
         return couleurParTerrain;
     }
 }

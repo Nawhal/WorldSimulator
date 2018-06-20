@@ -10,23 +10,25 @@ public class AgentPopulation implements Steppable {
     protected Dieu dieu;
     private String name;
     private StrategieDeJeu strat;
-    public int NUMBER_TERRAIN = 5;
-    public int getNUMBER_TERRAIN() {
-		return NUMBER_TERRAIN;
-	}
 
-	public void setNUMBER_TERRAIN(int nUMBER_TERRAIN) {
-		NUMBER_TERRAIN = nUMBER_TERRAIN;
-	}
-
-	protected Race race;
+	private Race race;
     private int numberInhabitants = 1;
-    public static int MAX_POPULATION = 100;
-    public int x, y;
+    private static int MAX_POPULATION = 1000;
+    int x, y;
 
-    public AgentPopulation(Dieu dieu, Race race) {
+    AgentPopulation(Dieu dieu, Race race) {
         this.dieu = dieu;
         this.race = race;
+    }
+
+    AgentPopulation(Population population) {
+        this.dieu = population.getDieuPop();
+        this.race = population.getRacePop();
+    }
+
+    AgentPopulation(AgentPopulation population) {
+        this.dieu = population.dieu;
+        this.race = population.race;
     }
 
     public Dieu getDieu() {
@@ -37,7 +39,7 @@ public class AgentPopulation implements Steppable {
     }
 
     protected void expend (SimState state) {
-        Map map = (Map) state;
+        Monde map = (Monde) state;
         AgentPopulation p = new AgentPopulation(dieu, race);
         Int2D location = map.getFreeLocation(this.x, this.y);
         if (location != null) {
@@ -54,7 +56,7 @@ public class AgentPopulation implements Steppable {
             state.schedule.scheduleRepeating(this).stop();
             return;
         }
-        Map map = (Map) state;
+        Monde map = (Monde) state;
         boolean fight = false;
 
         AgentPopulation adv = map.getAdversaryLocation(this.x, this.y, this);
@@ -78,11 +80,11 @@ public class AgentPopulation implements Steppable {
         return new Int2D(this.x, this.y);
     }
 
-    public void tuer (Map map) {
+    public void tuer (Monde map) {
         this.numberInhabitants = 0;
         map.yard.remove(this);
     }
-    public boolean attaquer (AgentPopulation ennemi, Map map) {
+    public boolean attaquer (AgentPopulation ennemi, Monde map) {
         //System.out.println("test2");
         if (ennemi.defendre(this, map))
             return true;
@@ -103,7 +105,7 @@ public class AgentPopulation implements Steppable {
         return this.numberInhabitants;
     }
 
-    private boolean defendre (AgentPopulation attaquant, Map map) {
+    private boolean defendre (AgentPopulation attaquant, Monde map) {
         Terrain terrain = map.getTerrain(this.x, this.y);
         if(terrain == null) {
             tuer(map);
@@ -153,15 +155,15 @@ public class AgentPopulation implements Steppable {
         return ratio;
     }
 
-    public void grandir (Map map) {
+    public void grandir (Monde map) {
         int bebes = (int)(calculBonusAccroissement(map) * getNombreHabitants()/2);
         if (bebes == 0)
             bebes = 1;
         setNombreHabitants(getNombreHabitants() + bebes);
     }
 
-    private float calculBonusAccroissement(Map map) {
-        float result = this.dieu.getBonusBaseAccroissement() * this.race.getBonusAttaque() ;
+    private float calculBonusAccroissement(Monde map) {
+        float result = this.dieu.getBonusBaseAccroissement() * this.race.getBonusAttaque();
         result *= map.getTerrain(this.x, this.y).getBonusAccroissment();
         if (map.getTerrain(this.x, this.y).getNom().equals(this.dieu.getTerrainPredilection()))
             result *= this.dieu.getBonusTerrainAccroissement();

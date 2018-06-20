@@ -1,49 +1,35 @@
 package agents.gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import javax.swing.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
-import agents.model.Map;
+import agents.model.Monde;
+import metier.MondeInfos;
 import metier.Terrain;
 
-import metier.Monde;
 import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;
 import sim.engine.SimState;
 import sim.portrayal.Inspector;
-import sim.portrayal.grid.HexaObjectGridPortrayal2D;
 import sim.portrayal.grid.HexaSparseGridPortrayal2D;
-import sim.portrayal.grid.SparseGridPortrayal2D;
-import sim.portrayal.simple.HexagonalPortrayal2D;
-import sim.portrayal.simple.AbstractShapePortrayal2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 import agents.model.AgentPopulation;
-import agents.model.Dieu1;
-import agents.model.Dieu2;
 
 public class BeingsWithUI extends GUIState {
-    public static int FRAME_SIZE = 600;
-    public Display2D display;
-    public JFrame displayFrame;
+    private static int FRAME_SIZE = 600;
+    private Display2D display;
+    private JFrame displayFrame;
 
     private HexaSparseGridPortrayal2D yardPortrayal = new HexaSparseGridPortrayal2D();
-    private Monde monde;
 
-    public BeingsWithUI (SimState state, Monde monde) {
+    public BeingsWithUI (SimState state) {
         super(state);
-        this.monde = monde;
     }
 
     public static String getName () {
-        return "World Simulator";
+        return "God Fight";
     }
 
     public void start () {
@@ -56,45 +42,14 @@ public class BeingsWithUI extends GUIState {
         setupPortrayals();
     }
 
-    public void setupPortrayals () {
-        Map map = (Map) state;
+    private void setupPortrayals () {
+        Monde map = (Monde) state;
         yardPortrayal.setField(map.yard);
-        // TODO When hexagons ready => set same portrayal for everyone and handle the color in portrayal
-        //yardPortrayal.setPortrayalForClass(Map.class, getTerrainPortRayal());
-        yardPortrayal.setPortrayalForClass(Dieu1.class, getD1Portrayal());
-        yardPortrayal.setPortrayalForClass(Dieu2.class, getD2Portrayal());
-        yardPortrayal.setPortrayalForClass(AgentPopulation.class, getPopPortrayal());
-        yardPortrayal.setPortrayalForClass (Terrain.class, getTerrainPortRayal());
+        yardPortrayal.setPortrayalForClass(AgentPopulation.class, new PopulationPortrayal());
+        yardPortrayal.setPortrayalForClass(Terrain.class, new TerrainPortrayal());
         display.reset();
-        display.setBackdrop(Color.GREEN);
-        // redraw the display
-        // addBackgroundImage();
+        addBackgroundImage();
         display.repaint();
-    }
-
-    private OvalPortrayal2D getPopPortrayal () {
-        StrangeOvalPortrayal r = new StrangeOvalPortrayal();
-        r.filled = true;
-        return r;
-    }
-    public TerrainPortrayal getTerrainPortRayal() {
-        TerrainPortrayal hexPort2D = new TerrainPortrayal();
-        //AbstractShapePortrayal2D hexPort2D = new AbstractShapePortrayal2D();
-        return hexPort2D;
-    }
-
-    private OvalPortrayal2D getD1Portrayal () {
-        OvalPortrayal2D r = new OvalPortrayal2D();
-        r.paint = Color.RED;
-        r.filled = true;
-        return r;
-    }
-
-    private OvalPortrayal2D getD2Portrayal () {
-        OvalPortrayal2D r = new OvalPortrayal2D();
-        r.paint = Color.BLUE;
-        r.filled = true;
-        return r;
     }
 
     public void init (Controller c) {
@@ -102,10 +57,21 @@ public class BeingsWithUI extends GUIState {
         display = new Display2D(FRAME_SIZE, FRAME_SIZE, this);
         display.setClipping(false);
         displayFrame = display.createFrame();
-        displayFrame.setTitle("Map");
+        displayFrame.setTitle("God Fight");
         c.registerFrame(displayFrame); // so the frame appears in the "Display" list
         displayFrame.setVisible(true);
-        display.attach(yardPortrayal, "Yard");
+        display.attach(yardPortrayal, "Monde");
+    }
+
+    private void addBackgroundImage() {
+        Image i = new ImageIcon(getClass().getResource("../../design/GameBackground.jpg")).getImage();
+        int w = i.getWidth(null) / 5;
+        int h = i.getHeight(null) / 5;
+        BufferedImage b = display.getGraphicsConfiguration().createCompatibleImage(w, h);
+        Graphics g = b.getGraphics();
+        g.drawImage(i, 0, 0, w, h, null);
+        g.dispose();
+        display.setBackdrop(new TexturePaint(b, new Rectangle(0, 0, w, h)));
     }
 
     public Object getSimulationInspectedObject () {

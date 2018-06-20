@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import metier.Dieu;
 import metier.FabriqueTerrain;
-import metier.Monde;
 import metier.MondeInfos;
 import metier.ValeursParDefaut;
 
@@ -128,11 +127,8 @@ public class FenetreRecapitulatifController implements Initializable {
             dieuCourant = infosMonde.getDieux().get(i);
             infosMonde.getPopulations().put(dieuCourant, ValeursParDefaut.populationParDieu().get(dieuCourant.getNom()));
         }
-        
-        
-        Monde monde = new Monde(infosMonde);
-        // TODO Ouvrir MASON et lancer agents
-        MasonSimulation.runUI(monde);
+
+        MasonSimulation.runUI(infosMonde);
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }

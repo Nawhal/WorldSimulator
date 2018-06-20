@@ -1,6 +1,7 @@
 package agents.model;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.scene.paint.Color;
 import metier.*;
@@ -13,130 +14,99 @@ import sim.util.Bag;
 import sim.util.Int2D;
 
 
-public class Map extends SimState {
-    private Monde monde;
+public class Monde extends SimState {
+    private MondeInfos mondeInfos;
 
-    //public static int GRID_SIZE = 20;
-    //public SparseGrid2D yard = new SparseGrid2D(GRID_SIZE, GRID_SIZE);
-    public static int grid_size;
+    private int grid_size;
     public SparseGrid2D yard;
-    public int num_terrains = 5;
-    public List<AgentPopulation> agentsDieux = new ArrayList<AgentPopulation>();
-    
-    
-    public Monde getMonde() {
-		return monde;
-	}
+    private List<AgentPopulation> agentsDieux = new ArrayList<>();
+        public List<AgentPopulation> getAgents() { return agentsDieux; } // FIXME useful ?
+        public void setAgents(List<AgentPopulation> agents) { this.agentsDieux = agents; }
 
-	public void setMonde(Monde monde) {
-		this.monde = monde;
-
-
-
-	}
-
-	public int getNum_terrains() {
-		return num_terrains;
-	}
-
-	public void setNum_terrains(int num_terrains) {
-		this.num_terrains = num_terrains;
-	}
-
-	public List<AgentPopulation> getAgents() {
-		return agentsDieux;
-	}
-
-	public void setAgents(List<AgentPopulation> agents) {
-		this.agentsDieux = agents;
-	}
-
-	public Map (long seed, Monde monde) {
+	public Monde (long seed, MondeInfos mondeInfos) {
         super(seed);
-        this.monde = monde;
+        this.mondeInfos = mondeInfos;
 
-        this.grid_size = monde.getLongueurMax();
+        int nbCase = calculerNbCase(mondeInfos);
+        double squareRoot = Math.sqrt(nbCase);
+        this.grid_size = squareRoot % 1 == 0 ? (int)squareRoot : (int)squareRoot + 1;
         this.yard = new SparseGrid2D(grid_size, grid_size);
-
+        genererTerrainCase();
+        mettrePopulationsDansCases();
     }
 
-    public SparseGrid2D getYard() {
-		return yard;
-	}
-
-	public void setYard(SparseGrid2D yard) {
-		this.yard = yard;
-	}
+    /**
+     * Calcul le nombre de case necessaire a partir des informations du monde a générer
+     * @param mondeInfos Information sur le monde à générer
+     * @return Nombre de case necessaire pour créer le monde
+     */
+    private int calculerNbCase (MondeInfos mondeInfos) {
+        int nbCase = 0;
+        for(Terrain t : mondeInfos.getTerrains().keySet()) {
+            nbCase += mondeInfos.getTerrains().get(t);
+        }
+        return nbCase;
+    }
 
 	public void start () {
         System.out.println("Simulation started");
         super.start();
-        yard.clear();
-        int nbCasesTotal = grid_size * grid_size;
-        genererTerrainCase(this.monde, nbCasesTotal);
         //initTestBattle();
-        genererDieux(monde);
     }
 
-
-
-    private void genererTerrainCase (Monde monde, int nbCase) {
-
-        ArrayList<Case> cases = monde.getListeCase();
-        int index = cases.size();
-        Random r = new Random();
-        while (index < nbCase) {
-            Case c = new Case(monde, 0);
-            c.setTerrain(new Terrain("Terrain neutre", 0f, 0f));
-
-            cases.add(r.nextInt(index), c);
-            index = cases.size();
-        }
-        for(int i = 0; i < grid_size; i++) {
-            for(int j = 0; j < grid_size; j++) {
-                index--;
-                if(index < 0) {
-                    Terrain a = new Terrain("Terrain neutre", 0f, 0f);
-                    yard.setObjectLocation(a, i, j);
-                } else {
-                    Case c = cases.get(index);
-                    Terrain t = new Terrain(c.getTerrain().getNom(), c.getTerrain().getBonusAccroissment(), c.getTerrain().getBonusPuissance());
-                    yard.setObjectLocation(t, i, j);
-                }
+    /**
+     * Renseigne le Terrain de chaque case de manière aléatoire
+     */
+    private void genererTerrainCase () {
+        int index;
+        List<Int2D> coordonnees = new ArrayList<>();
+        for (int x = 0; x < grid_size; x++) {
+            for (int y = 0; y < grid_size; y++) {
+                coordonnees.add(new Int2D(x, y));
             }
         }
 
-        for(int i = 0; i < grid_size; i++) {
-            for(int j = 0; j < grid_size; j++) {
-                Bag b = yard.getObjectsAtLocation(i, j);
-                if(b == null)
-                    System.out.println(0);
-                else
-                    System.out.println(1);
+        HashMap<Terrain, Integer> terrains = this.mondeInfos.getTerrains();
+        int nbTerrains = calculerNbCase(this.mondeInfos);
+        int nbCoordonnees = coordonnees.size();
+        if (nbTerrains < nbCoordonnees) {
+            terrains.put(new Terrain(FabriqueTerrain.fabriquerTerrain("Terrain Neutre")), nbCoordonnees - nbTerrains);
+        }
 
+        for(Terrain t : terrains.keySet()) {
+            for(int i = 0; i < terrains.get(t); i++) {
+                index = ThreadLocalRandom.current().nextInt(0, coordonnees.size());
+                yard.setObjectLocation(new Terrain(FabriqueTerrain.fabriquerTerrain(t.getNom())), coordonnees.get(index));
+                coordonnees.remove(index);
             }
         }
     }
 
-
-    private void genererDieux (Monde monde) {
-        HashMap<Dieu, Population> dieux = monde.getPopulation();
-
-        for (java.util.Map.Entry<Dieu, Population> entry : dieux.entrySet()) {
-            Random r = new Random();
-            Int2D free = null;
-            int x = -1;
-            int y = -1;
-            do {
-                x = r.nextInt(grid_size);
-                y = r.nextInt(grid_size);
-                free = getFreeLocation(x, y);
-            } while(free == null);
-            Dieu dieu = entry.getKey();
-            Race race = entry.getValue().getRacePop();
-            initAgentPopulation(dieu, race, x, y);
+    /**
+     * Positionne aléatoirement les populations dans le yard
+     */
+    private void mettrePopulationsDansCases () {
+        int index;
+        List<Int2D> coordonnees = new ArrayList<>();
+        for (int x = 0; x < grid_size; x++) {
+            for (int y = 0; y < grid_size; y++) {
+                coordonnees.add(new Int2D(x, y));
+            }
         }
 
+        for(Population p : mondeInfos.getPopulations().values()) {
+            index = ThreadLocalRandom.current().nextInt(0, coordonnees.size());
+            initAgentPopulation(p, coordonnees.get(index));
+            coordonnees.remove(index);
+        }
+    }
+
+    private void initAgentPopulation(Population pop, Int2D coord) {
+        AgentPopulation p = new AgentPopulation(pop);
+        yard.setObjectLocation(p, coord);
+        p.x = coord.x;
+        p.y = coord.y;
+        schedule.scheduleRepeating(p);
     }
 
 
@@ -156,31 +126,19 @@ public class Map extends SimState {
         Race r = new Race("Nymphe", 0.9f, 1.1f);
         Dieu d = new Dieu("Chauntéa, Déesse des Plaines", "Plaine", 0.9f, 1.5f, 0.9f, 2.5f, Color.ORANGE, "design/Chauntea.jpg");
 
-        Dieu1 p = new Dieu1(d,r);
-        yard.setObjectLocation(p, 0, 0);
-        p.x = 0;
-        p.y = 0;
-        schedule.scheduleRepeating(p);
-        Race r2 = new Race("Elfe", 0.95f, 1.05f);
-        Dieu d2 = new Dieu("Heruwa, Dieu des déserts", "Désert", 0.9f, 1.5f, 0.9f, 1.5f, Color.ANTIQUEWHITE, "design/Heruwa.jpg");
-        Dieu2 q = new Dieu2(d2, r2);
-
-        yard.setObjectLocation(q,19,19);
-        q.x = 19;
-        q.y = 19;
-        schedule.scheduleRepeating(q);
-
-    	
-    }
-
-  private void initAgentPopulation(Dieu d, Race r, int x, int y) {
-	  
-		AgentPopulation p = new AgentPopulation(d, r);
-        yard.setObjectLocation(p,x, y);
-        p.x = x;
-        p.y = y;
-        schedule.scheduleRepeating(p);
-  }
+//        Dieu1 p = new Dieu1(d,r);
+//        yard.setObjectLocation(p, 0, 0);
+//        p.x = 0;
+//        p.y = 0;
+//        schedule.scheduleRepeating(p);
+//        Race r2 = new Race("Elfe", 0.95f, 1.05f);
+//        Dieu d2 = new Dieu("Heruwa, Dieu des déserts", "Désert", 0.9f, 1.5f, 0.9f, 1.5f, Color.ANTIQUEWHITE, "design/Heruwa.jpg");
+//        Dieu2 q = new Dieu2(d2, r2);
+//        yard.setObjectLocation(q,19,19);
+//        q.x = 19;
+//        q.y = 19;
+//        schedule.scheduleRepeating(q);
+}
 
     public boolean free (int x, int y) {
         int xx = yard.stx(x);

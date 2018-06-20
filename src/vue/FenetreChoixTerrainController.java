@@ -72,7 +72,7 @@ public class FenetreChoixTerrainController implements Initializable {
     {
         for (int i=0; i<spTerrains.size(); i++)
         {
-            spTerrains.get(i).setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 50, 10));
+            spTerrains.get(i).setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 5, 1));
         }
         setSpinnersToInfosMonde();
     }

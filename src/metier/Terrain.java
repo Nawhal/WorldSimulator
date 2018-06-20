@@ -23,4 +23,10 @@ public class Terrain {
         this.bonusAccroissment = bonusAccroissment;
         this.bonusPuissance = bonusPuissance;
     }
+
+    public Terrain (Terrain terrain) {
+        this.nom = terrain.nom;
+        this.bonusAccroissment = terrain.bonusAccroissment;
+        this.bonusPuissance = terrain.bonusPuissance;
+    }
 }

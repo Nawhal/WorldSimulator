@@ -5,7 +5,8 @@ package metier;
  * @author Cedric
  */
 public class Population {
-    
+
+    // TODO Remove case pop and do shit
     public static final int MAX_POPULATION = 10000;
     
     private String nom;
@@ -34,12 +35,6 @@ public class Population {
         public Dieu getDieuPop () { return dieuPop; }
         public void setDieuPop (Dieu value) { dieuPop = value; }
         
-        
-    private Case casePop;
-        /** @return Case contenant la population */
-        public Case getCasePop () { return casePop; }
-        public void setCasePop (Case value) { casePop = value; }
-        
     private StrategieDeJeu strat;
         /** @return Stratégie de jeu adoptée par la population */
         public StrategieDeJeu getStrat () {return strat;}
@@ -55,19 +50,13 @@ public class Population {
         strat = new StrategieDeJeuDefaut();
     }
     
-    public Population (String nom, int nombreHabitants, Dieu dieuPop, Race racePop, Case casePop) {
+    public Population (String nom, int nombreHabitants, Dieu dieuPop, Race racePop, StrategieDeJeu strat) {
         this(nom, nombreHabitants, dieuPop, racePop);
-        this.casePop = casePop;
-    }
-    
-    public Population (String nom, int nombreHabitants, Dieu dieuPop, Race racePop, Case casePop, StrategieDeJeu strat) {
-        this(nom, nombreHabitants, dieuPop, racePop, casePop);
         this.strat = strat;
     }
-    
-    
+
     public Population (Population pop) {
-        this(pop.getNom(), pop.getNombreHabitants(),pop.getDieuPop(), pop.getRacePop(), pop.getCasePop(), pop.getStrat());
+        this(pop.getNom(), pop.getNombreHabitants(),pop.getDieuPop(), pop.getRacePop(), pop.getStrat());
     }
     
     /**
@@ -82,8 +71,8 @@ public class Population {
      */
     public void tuer () {
         setNombreHabitants(0);
-        getCasePop().setPopulation(null);
-        setCasePop(null);
+//        getCasePop().setPopulation(null);
+//        setCasePop(null);
     }
     
     /**
@@ -106,6 +95,7 @@ public class Population {
      * @return true -> L'attaquant gagne // false -> L'attaquant perd
      */
     private boolean defendre (Population ennemi) {
+        /*
         float ratioDefenseur = getRatioPuissanceAttaque(getCasePop().getTerrain()); // le terrain de l'attaque est le terrain du defenseur
         ratioDefenseur += getCasePop().getTerrain().getBonusPuissance(); // le defenseur a droit a un bonus de defence car il connait le terrain ou il se trouve
         float ratioEnnemi = ennemi.getRatioPuissanceAttaque(getCasePop().getTerrain());
@@ -115,7 +105,7 @@ public class Population {
             return false;
         }
         tuer();
-        ennemi.setNombreHabitants(ennemi.getNombreHabitants() - calculNbMortPourLeGagnant(ennemi, ratioEnnemi, this, ratioDefenseur)); // Calcul des "morts"
+        ennemi.setNombreHabitants(ennemi.getNombreHabitants() - calculNbMortPourLeGagnant(ennemi, ratioEnnemi, this, ratioDefenseur)); // Calcul des "morts"*/
         return true;        
     }
     
@@ -159,9 +149,9 @@ public class Population {
      */
     private float calculBonusAccroissement() {
         float result = getDieuPop().getBonusBaseAccroissement() * getRacePop().getBonusAccroissement();
-                result *= getCasePop().getTerrain().getBonusAccroissment();
-        if (getCasePop().getTerrain().getNom().equals(getDieuPop().getTerrainPredilection()))
-            result *= getDieuPop().getBonusTerrainAccroissement();
+//        result *= getCasePop().getTerrain().getBonusAccroissment();
+//        if (getCasePop().getTerrain().getNom().equals(getDieuPop().getTerrainPredilection()))
+//            result *= getDieuPop().getBonusTerrainAccroissement();
         return result;
     }    
     

@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public abstract class FabriqueTerrain {
     
-    private static Map<String, Terrain> terrains = new HashMap();
+    private static Map<String, Terrain> terrains = new HashMap<>();
     
     /**
      * Renvoie une instance de Terrain ayant le nom passé en argument
