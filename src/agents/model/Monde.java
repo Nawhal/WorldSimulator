@@ -46,6 +46,7 @@ public class Monde extends SimState {
 	public void start () {
         System.out.println("Simulation started");
         super.start();
+        yard.clear();
         genererTerrainCase();
         mettrePopulationsDansCases();
     }
@@ -115,7 +116,7 @@ public class Monde extends SimState {
         return (x >= 0 && x < grid_size && y >= 0 && y < grid_size);
     }
 
-    public Int2D getFreeLocation (int x, int y) {
+    Int2D getFreeLocation (int x, int y) {
         Bag bb = null;
         boolean hasOnlyTerrain = false;
         if(inGrid(x - 1,y)) {
@@ -197,31 +198,30 @@ public class Monde extends SimState {
 		}
 		return null;
 	}
-	public AgentPopulation getAdversaryLocation (int x, int y, AgentPopulation p) {
-		boolean t = false;
-        AgentPopulation adversary = null;
-		if(inGrid(x - 1,y) && !t) {
+	AgentPopulation getAdversaryLocation (int x, int y, AgentPopulation p) {
+        AgentPopulation adversary;
+		if(inGrid(x - 1,y)) {
             adversary = getAgentPopulation(x - 1,y);
             if(adversary != null && adversary.getIdDieu() != p.getIdDieu()) {
                 return adversary;
             }
 
         }
-        if(inGrid(x + 1,y) && !t) {
+        if(inGrid(x + 1,y)) {
             adversary = getAgentPopulation(x + 1,y);
             if(adversary != null && adversary.getIdDieu() != p.getIdDieu()) {
                 return adversary;
             }
 
         }
-        if(inGrid(x,y - 1) && !t) {
+        if(inGrid(x,y - 1)) {
             adversary = getAgentPopulation(x,y - 1);
             if(adversary != null && adversary.getIdDieu() != p.getIdDieu()) {
                 return adversary;
             }
 
         }
-        if(inGrid(x,y + 1) && !t) {
+        if(inGrid(x,y + 1)) {
             adversary = getAgentPopulation(x,y + 1);
             if(adversary != null && adversary.getIdDieu() != p.getIdDieu()) {
                 return adversary;
@@ -231,7 +231,7 @@ public class Monde extends SimState {
         return null;
     }
 
-    public Terrain getTerrain(int x, int y) {
+    Terrain getTerrain(int x, int y) {
         if(inGrid(x,y)) {
             Bag bag = yard.getObjectsAtLocation(x, y);
             if(bag != null) {
